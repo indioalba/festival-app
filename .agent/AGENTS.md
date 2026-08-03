@@ -66,3 +66,4 @@ The app and Android libraries have two product flavors: `demo` and `prod`, and t
 ## Documentation
 - Everytime you perform a task, add to docs the description of what has been done, the date and time and the files touched.
 - [Task: Create HTTP API Call (Issue #1)](file:///Users/indioalba/Workspace/Festival/docs/tasks/2026-07-31_issue_1.md)
+- [Task: Refactor API Naming and Add Flavors](file:///Users/indioalba/Workspace/Festival/docs/tasks/2026-08-03_api_rename_flavors.md)
