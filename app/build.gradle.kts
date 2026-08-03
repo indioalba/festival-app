@@ -31,16 +31,17 @@ android {
 
         }
     }
+    flavorDimensions += "version"
     productFlavors {
         create("demo") {
             dimension = "version"
             applicationIdSuffix = ".demo"
             versionNameSuffix = "-demo"
         }
-        create("full") {
+        create("prod") {
             dimension = "version"
-            applicationIdSuffix = ".full"
-            versionNameSuffix = "-full"
+            applicationIdSuffix = ".prod"
+            versionNameSuffix = "-prod"
         }
     }
     compileOptions {
