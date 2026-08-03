@@ -51,8 +51,8 @@ The app and Android libraries have two product flavors: `demo` and `prod`, and t
 - Features or issues are defined on https://github.com/indioalba/festival-app/issues
 - When there is an open issue, create a subagent "Coder" and perform the task and the tests
 - When the subagent is done, create a pull request
-- Create a subagent "Reviewer" that review every 5 minutes if there is any pull request open, review the code following best practises and make comments with the problem and the possible solution on the pull request, if there is any. In case everything is fine, just write "Everything is fine"
-- If there is any problem in the review, ask "Coder" to fix the problem. Otherwise, just merge to main.
+- Create a subagent "Reviewer" that review every 35 minutes if there is any pull request open, review the code following best practises and make comments with the problem and the possible solution on the pull request, if there is any. In case everything is fine, just write "Everything is fine"
+- If any of the checks fail or if there is any problem in the review, ask "Coder" to fix the problem. Otherwise, just merge to main.
 
 ## Continuous integration
 

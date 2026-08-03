@@ -26,6 +26,23 @@ android {
                 enable = false
             }
         }
+        debug {
+            enableUnitTestCoverage = true
+
+        }
+    }
+    flavorDimensions += "version"
+    productFlavors {
+        create("demo") {
+            dimension = "version"
+            applicationIdSuffix = ".demo"
+            versionNameSuffix = "-demo"
+        }
+        create("prod") {
+            dimension = "version"
+            applicationIdSuffix = ".prod"
+            versionNameSuffix = "-prod"
+        }
     }
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_11
