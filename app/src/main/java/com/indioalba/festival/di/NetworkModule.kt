@@ -1,6 +1,6 @@
 package com.indioalba.festival.di
 
-import com.indioalba.festival.data.remote.FestivalApi
+import com.indioalba.festival.data.remote.festivalApi
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -24,11 +24,11 @@ object NetworkModule {
 
     @Provides
     @Singleton
-    fun provideFestivalApi(json: Json): FestivalApi {
+    fun provideFestivalApi(json: Json): festivalApi {
         return Retrofit.Builder()
             .baseUrl("https://api.festival.com/")
             .addConverterFactory(json.asConverterFactory("application/json".toMediaType()))
             .build()
-            .create(FestivalApi::class.java)
+            .create(festivalApi::class.java)
     }
 }

@@ -4,7 +4,7 @@ import com.indioalba.festival.data.model.Event
 import retrofit2.http.GET
 import retrofit2.http.Query
 
-interface FestivalApi {
+interface festivalApi {
     @GET("agenda")
     suspend fun getAgenda(
         @Query("id") festivalId: String
