@@ -7,8 +7,8 @@ on:
   pull_request:
 
 jobs:
-  build:
-    name: "Build and Test"
+  test_and_apk:
+    name: "Local tests and APKs"
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
@@ -25,3 +25,17 @@ jobs:
 
       - name: Build and Test
         run: ./gradlew :app:assembleDemoDebug :app:testDemoDebugUnitTest
+
+  androidTest26:
+    name: "androidTest (26)"
+    runs-on: ubuntu-latest
+    steps:
+      - name: Skip
+        run: echo "Skipping for now"
+
+  androidTest34:
+    name: "androidTest (34)"
+    runs-on: ubuntu-latest
+    steps:
+      - name: Skip
+        run: echo "Skipping for now"
