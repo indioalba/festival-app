@@ -4,6 +4,8 @@ plugins {
     alias(libs.plugins.kotlin.serialization)
     alias(libs.plugins.hilt)
     alias(libs.plugins.ksp)
+    alias(libs.plugins.dependencyGuard)
+    alias(libs.plugins.roborazzi)
 }
 
 android {
@@ -20,6 +22,12 @@ android {
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
 
+    testOptions {
+        unitTests {
+            isIncludeAndroidResources = true
+        }
+    }
+
     buildTypes {
         release {
             optimization {
@@ -28,7 +36,6 @@ android {
         }
         debug {
             enableUnitTestCoverage = true
-
         }
     }
     flavorDimensions += "version"
@@ -51,6 +58,11 @@ android {
     buildFeatures {
         compose = true
     }
+}
+
+dependencyGuard {
+    configuration("demoDebugRuntimeClasspath")
+    configuration("prodDebugRuntimeClasspath")
 }
 
 dependencies {
@@ -83,6 +95,13 @@ dependencies {
     testImplementation(libs.junit)
     testImplementation(libs.okhttp.mockwebserver)
     testImplementation(libs.kotlinx.coroutines.test)
+    testImplementation(libs.robolectric)
+    testImplementation(libs.roborazzi)
+    testImplementation(libs.roborazzi.compose)
+    testImplementation(libs.roborazzi.junit4)
+    testImplementation(libs.androidx.compose.ui.test.junit4)
+    testImplementation(libs.androidx.compose.ui.test.manifest)
+
     androidTestImplementation(platform(libs.androidx.compose.bom))
     androidTestImplementation(libs.androidx.compose.ui.test.junit4)
     androidTestImplementation(libs.androidx.espresso.core)

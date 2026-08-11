@@ -7,6 +7,6 @@ import retrofit2.http.Query
 interface FestivalApi {
     @GET("agenda")
     suspend fun getAgenda(
-        @Query("id") festivalId: String
+        @Query("id") festivalId: String,
     ): List<Event>
 }

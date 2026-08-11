@@ -1,53 +1,51 @@
-# Implementation Plan - Create HTTP API Call (Issue #1)
+# Implementation Plan - Satisfying CI Quality Gates (Build.yaml)
 
-This plan covers the implementation of an HTTP API call to retrieve the festival agenda, as requested in [Issue #1](https://github.com/indioalba/festival-app/issues/1).
+This plan outlines the steps required to make the existing `Build.yaml` workflow pass by adding missing quality tools and configurations to the Festival project.
 
 ## User Review Required
 
 > [!IMPORTANT]
-> **Base URL:** The issue specifies the URL as "TBD". I will use `https://api.festival.com/` as a placeholder. Please let me know if there is a specific URL I should use.
+> **Complex CI Pipeline:** The current `Build.yaml` is configured for a much more complex project structure (similar to Google's "Now In Android"). Implementing all these gates will add significant infrastructure code to your project.
 
 > [!NOTE]
-> **Room & Hilt:** The `Event` class uses `@PrimaryKey`, and `AGENTS.md` mentions Hilt and Room. I will add these dependencies to the project as they are currently missing.
+> **Screenshots:** Roborazzi requires baseline images. After setup, the first CI run might still "fail" if it expects pre-existing screenshots to compare against.
 
 ## Proposed Changes
 
 ### Build Configuration
 
 #### [MODIFY] [libs.versions.toml](file:///Users/indioalba/Workspace/Festival/gradle/libs.versions.toml)
-Add versions and libraries for:
-- Retrofit & OkHttp
-- Kotlin Serialization
-- Room
-- Hilt
+Add versions and library/plugin aliases for:
+- Spotless (`com.diffplug.spotless`)
+- Dependency Guard (`com.dropbox.dependency-guard`)
+- Roborazzi (`io.github.takahirom.roborazzi`)
+- Module Graph Assertion (`com.jraska.module.graph.assertion`)
 
-#### [MODIFY] [build.gradle.kts (project)](file:///Users/indioalba/Workspace/Festival/build.gradle.kts)
-Add Hilt and Kotlin Serialization plugins.
+#### [MODIFY] [build.gradle.kts (root)](file:///Users/indioalba/Workspace/Festival/build.gradle.kts)
+Apply and configure global plugins:
+- Spotless (formatting rules for `*.kt` and `*.gradle.kts`)
+- Module Graph (to enable `graphUpdate`)
 
-#### [MODIFY] [build.gradle.kts (:app)](file:///Users/indioalba/Workspace/Festival/app/build.gradle.kts)
-Apply plugins and add dependencies for Retrofit, Room, and Hilt.
-
-### Data Layer
-
-#### [NEW] [Event.kt](file:///Users/indioalba/Workspace/Festival/app/src/main/java/com/indioalba/festival/data/model/Event.kt)
-Define the `Event` data class as specified in the issue.
-
-#### [NEW] [FestivalApi.kt](file:///Users/indioalba/Workspace/Festival/app/src/main/java/com/indioalba/festival/data/remote/FestivalApi.kt)
-Define the Retrofit interface with the GET `/agenda` endpoint.
-
-#### [NEW] [NetworkModule.kt](file:///Users/indioalba/Workspace/Festival/app/src/main/java/com/indioalba/festival/di/NetworkModule.kt)
-Hilt module to provide Retrofit and the API service.
+#### [MODIFY] [app/build.gradle.kts](file:///Users/indioalba/Workspace/Festival/app/build.gradle.kts)
+Apply and configure module-specific plugins:
+- Dependency Guard
+- Roborazzi (include Robolectric dependencies)
 
 ### Infrastructure
 
-#### [NEW] [FestivalApplication.kt](file:///Users/indioalba/Workspace/Festival/app/src/main/java/com/indioalba/festival/FestivalApplication.kt)
-Hilt Application class.
+#### [NEW] [spotless/copyright.kt](file:///Users/indioalba/Workspace/Festival/spotless/copyright.kt)
+Placeholder for copyright header if required by spotless config.
+
+#### [NEW] [app/dependencies/debug.txt](file:///Users/indioalba/Workspace/Festival/app/dependencies/debug.txt)
+Initial baseline for Dependency Guard.
 
 ## Verification Plan
 
 ### Automated Tests
-- Create a unit test for `FestivalApi` using `MockWebServer` to verify the request and response parsing.
-- Run `./gradlew test` to verify.
+1. Run `./gradlew spotlessCheck` to verify formatting.
+2. Run `./gradlew dependencyGuard` to verify dependency tracking.
+3. Run `./gradlew verifyRoborazziDemoDebug` (will likely require generating baselines first via `recordRoborazziDemoDebug`).
+4. Run `./gradlew graphUpdate` to verify graph generation.
 
 ### Manual Verification
-- Verify the project builds successfully with new dependencies.
+- Push a test commit to verify that GitHub Actions successfully runs all jobs in `Build.yaml`.
