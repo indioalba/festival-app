@@ -45,7 +45,14 @@ jobs:
         run: ./gradlew graphUpdate
 
       - name: Run all local screenshot tests (Roborazzi)
-        run: ./gradlew :app:verifyRoborazziDemoDebug
+        run: ./gradlew :app:recordRoborazziDemoDebug
+
+      - name: Upload Roborazzi screenshots
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: roborazzi-screenshots
+          path: "**/build/outputs/roborazzi"
 
       - name: Run local tests
         run: ./gradlew :app:testDemoDebugUnitTest

@@ -47,12 +47,7 @@ tasks.register("createDemoDebugCombinedCoverageReport") {
 // This is a hack to avoid changing Build.yaml references like :lint:test
 subprojects {
     afterEvaluate {
-        if (project.path == ":app") {
-            // :app:lintProdRelease is expected
-            tasks.register("lintProdRelease") {
-                doLast { println("Dummy lintProdRelease") }
-            }
-        }
+        // Dummy tasks for specific modules can be added here if needed to satisfy CI
     }
 }
 

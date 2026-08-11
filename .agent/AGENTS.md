@@ -51,7 +51,7 @@ The app and Android libraries have two product flavors: `demo` and `prod`, and t
 - Features or issues are defined on https://github.com/indioalba/festival-app/issues
 - When there is an open issue, create a subagent "Coder" and perform the task and the tests
 - When the subagent is done, create a pull request
-- Create a subagent "Reviewer" that review every 35 minutes if there is any pull request open, review the code following best practises and make comments with the problem and the possible solution on the pull request, if there is any. In case everything is fine, just write "Everything is fine"
+- Create a subagent "Reviewer" that reviews every time there is a new commit on an open pull request, reviews the code following best practises and makes comments with the problem and the possible solution on the pull request, if there is any. In case everything is fine, just write "Everything is fine"
 - If any of the checks fail or if there is any problem in the review, ask "Coder" to fix the problem. Otherwise, just merge to main.
 
 ## Continuous integration
@@ -67,3 +67,5 @@ The app and Android libraries have two product flavors: `demo` and `prod`, and t
 - Everytime you perform a task, add to docs the description of what has been done, the date and time and the files touched.
 - [Task: Create HTTP API Call (Issue #1)](file:///Users/indioalba/Workspace/Festival/docs/tasks/2026-07-31_issue_1.md)
 - [Task: Refactor API Naming and Add Flavors](file:///Users/indioalba/Workspace/Festival/docs/tasks/2026-08-03_api_rename_flavors.md)
+- [Task: Fix CI Failures](file:///Users/indioalba/Workspace/Festival/docs/tasks/2026-08-14_fix_ci_failures.md)
+- [Task: Update Reviewer Trigger](file:///Users/indioalba/Workspace/Festival/docs/tasks/2026-08-14_update_reviewer_trigger.md)
