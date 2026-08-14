@@ -69,3 +69,4 @@ The app and Android libraries have two product flavors: `demo` and `prod`, and t
 - [Task: Refactor API Naming and Add Flavors](file:///Users/indioalba/Workspace/Festival/docs/tasks/2026-08-03_api_rename_flavors.md)
 - [Task: Fix CI Failures](file:///Users/indioalba/Workspace/Festival/docs/tasks/2026-08-14_fix_ci_failures.md)
 - [Task: Update Reviewer Trigger](file:///Users/indioalba/Workspace/Festival/docs/tasks/2026-08-14_update_reviewer_trigger.md)
+- [Task: Implement Local Caching for Events (Issue #5)](file:///Users/indioalba/Workspace/Festival/docs/tasks/2026-08-14_local_caching_issue_5.md)
