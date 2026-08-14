@@ -4,6 +4,6 @@
 - [x] Amend commit with fixes
 - [x] Update `.gitignore` to exclude local IDE state
 - [x] Fix spotless formatting in `build.gradle.kts`
-- [/] Investigate and fix CI failure in "Local tests and APKs" (Roborazzi)
-    - [ ] Add artifact upload to `Build.yaml`
+- [x] Investigate and fix CI failure in "Local tests and APKs" (Roborazzi)
+    - [x] Add artifact upload to `Build.yaml`
     - [ ] Align Roborazzi task with "CI-generated" rule

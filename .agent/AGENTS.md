@@ -5,7 +5,7 @@ related to the event.
 
 ## Architecture
 
-This project is a modern Android application that follows the official Clean Architecture guidance from Google. It is a reactive, single-activity app that uses the following:
+This project is a modern Android application that follows the official Clean Architecture guidance from Google using domain layer. It is a reactive, single-activity app that uses the following:
 
 -   **UI:** Built entirely with Jetpack Compose, including Material 3 components and adaptive layouts for different screen sizes.
 -   **State Management:** Unidirectional Data Flow (UDF) is implemented using Kotlin Coroutines and `Flow`s. `ViewModel`s act as state holders, exposing UI state as streams of data.
