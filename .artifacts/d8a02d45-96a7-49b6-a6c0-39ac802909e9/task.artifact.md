@@ -1,0 +1,9 @@
+- [x] Fix `DuplicateTaskException` in root `build.gradle.kts`
+- [x] Fix package name assertion in `ExampleInstrumentedTest.kt`
+- [x] Verify local build for all CI tasks
+- [x] Amend commit with fixes
+- [x] Update `.gitignore` to exclude local IDE state
+- [x] Fix spotless formatting in `build.gradle.kts`
+- [x] Investigate and fix CI failure in "Local tests and APKs" (Roborazzi)
+    - [x] Add artifact upload to `Build.yaml`
+    - [ ] Align Roborazzi task with "CI-generated" rule
