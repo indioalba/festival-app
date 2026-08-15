@@ -22,7 +22,6 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
@@ -34,7 +33,6 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.indioalba.festival.data.model.Event
 import com.indioalba.festival.ui.events.EventsIntent
-import com.indioalba.festival.ui.events.EventsUiState
 import com.indioalba.festival.ui.events.EventsViewModel
 import com.indioalba.festival.ui.theme.FestivalTheme
 import dagger.hilt.android.AndroidEntryPoint
@@ -57,14 +55,14 @@ class MainActivity : ComponentActivity() {
                         if (uiState.isOffline) {
                             OfflineIndicator()
                         }
-                    }
+                    },
                 ) { innerPadding ->
                     EventList(
                         events = uiState.events,
                         modifier = Modifier.padding(innerPadding),
-                        onToggleFavorite = { id -> 
-                            viewModel.onIntent(EventsIntent.ToggleFavorite(id)) 
-                        }
+                        onToggleFavorite = { id ->
+                            viewModel.onIntent(EventsIntent.ToggleFavorite(id))
+                        },
                     )
                 }
             }
@@ -74,9 +72,9 @@ class MainActivity : ComponentActivity() {
 
 @Composable
 fun EventList(
-    events: List<Event>, 
+    events: List<Event>,
     modifier: Modifier = Modifier,
-    onToggleFavorite: (Int) -> Unit = {}
+    onToggleFavorite: (Int) -> Unit = {},
 ) {
     LazyColumn(modifier = modifier.fillMaxSize()) {
         items(events) { event ->
@@ -93,7 +91,7 @@ fun EventItem(event: Event, onToggleFavorite: (Int) -> Unit) {
             .fillMaxWidth()
             .clickable { onToggleFavorite(event.id) }
             .padding(16.dp),
-        verticalAlignment = Alignment.CenterVertically
+        verticalAlignment = Alignment.CenterVertically,
     ) {
         Column(modifier = Modifier.weight(1f)) {
             Text(text = event.title, style = MaterialTheme.typography.titleMedium)
@@ -103,7 +101,7 @@ fun EventItem(event: Event, onToggleFavorite: (Int) -> Unit) {
         Icon(
             imageVector = if (event.isFavorite) Icons.Default.Favorite else Icons.Default.FavoriteBorder,
             contentDescription = "Favorite",
-            tint = if (event.isFavorite) Color.Red else Color.Gray
+            tint = if (event.isFavorite) Color.Red else Color.Gray,
         )
     }
 }
@@ -118,7 +116,7 @@ fun OfflineIndicator() {
             .padding(8.dp),
         color = Color.White,
         textAlign = TextAlign.Center,
-        style = MaterialTheme.typography.labelMedium
+        style = MaterialTheme.typography.labelMedium,
     )
 }
 
@@ -128,8 +126,8 @@ fun EventListPreview() {
     FestivalTheme {
         EventList(
             events = listOf(
-                Event(title = "Test Event", date = "2025-10-11", time = "10:00", category = "OTHER")
-            )
+                Event(title = "Test Event", date = "2025-10-11", time = "10:00", category = "OTHER"),
+            ),
         )
     }
 }

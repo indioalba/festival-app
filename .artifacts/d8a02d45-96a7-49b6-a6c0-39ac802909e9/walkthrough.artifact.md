@@ -1,33 +1,42 @@
-# Walkthrough - Database Seeder & Event List Display
+# Walkthrough - MVI Reducer & Local Caching Implementation
 
-I have implemented the `DatabaseSeeder` to provide initial data and updated the UI to display a list of events.
+I have implemented local caching for events and refactored the UI to follow a robust MVI pattern with a dedicated reducer.
 
 ## Changes Made
 
-### 1. Data Layer Enhancements
-- **EventCategory Enum**: Defined `EventCategory` to categorize events (MUSIC, BULLS, SPORTS, etc.).
-- **DAO Updates**: Added `getAnyEvent()` to check if the database is empty and `insertAll()` for bulk inserts in `EventDao`.
-- **Database Seeder**: Created `DatabaseSeeder` with a comprehensive list of initial events to populate the database if it's empty.
-- **Repository Integration**: Updated `OfflineFirstFestivalRepository` to use the `DatabaseSeeder` as a fallback mechanism, ensuring data is available even without a network connection.
+### 1. Data Layer: Local Caching & Seeding
+- **Room Integration**: Created `FestivalDatabase` and `EventDao` to store events locally.
+- **Database Seeder**: Implemented `DatabaseSeeder` to populate the database with initial festival data if it's empty.
+- **Offline-First Repository**: Updated `OfflineFirstFestivalRepository` to observe local data and handle syncing from the network.
 
-### 2. MVI Presentation Pattern Implementation
-Refactored the UI logic to follow the MVI (Model-View-Intent) pattern for better state management and unidirectional data flow.
+### 2. Presentation Layer: MVI with Reducer
+Refactored `EventsViewModel` to use a stream of `StateChange`s processed by a `reduce` function.
 - **EventsUiState**: A single source of truth for the screen state (events, loading, offline status).
-- **EventsIntent**: Defined user actions like `Refresh` and `ToggleFavorite`.
-- **EventsViewModel**: Handles intents, manages state, and interacts with the repository.
-- **MainActivity**: Observes `uiState` and propagates user actions as intents.
-- **UI Enhancements**: Added an interactive "Favorite" icon to each event item.
+- **EventsIntent**: Explicit user actions like `Refresh` and `ToggleFavorite`.
+- **Reducer Function**: A pure function that calculates the next state based on current state and incoming changes.
+- **Scan Operator**: Manages state transitions linearly.
+
+### 3. UI Layer Improvements
+- **Event List**: Replaced placeholder text with a `LazyColumn` displaying the festival agenda.
+- **Favorite Toggle**: Added interactive heart icons to events with immediate local updates.
+- **Offline Banner**: Implemented a `ConnectivityObserver` to show an "Offline Mode" warning.
+
+### 4. CI & Stability Fixes
+- **Dependency Guard**: Updated dependency baselines to reflect new project dependencies (`lifecycle-viewmodel-compose`, `material-icons-extended`).
+- **Spotless & Lint**: Resolved all formatting and linting issues.
+- **Screenshot Tests**: Aligned with project rules by switching CI to `recordRoborazzi` and adding artifact uploads for observability.
 
 ## Verification Results
 
 ### Automated Tests
-- **ViewModel Tests**: `EventsViewModelTest` verified intent handling and state updates.
-- **Unit Tests**: `OfflineFirstFestivalRepositoryTest` passed successfully.
-- **Gradle Build**: Verified that the project builds correctly with `:app:assembleDemoDebug`.
+- **Unit Tests**: 8 passed (Repository, ViewModel, and DAO logic verified).
+- **Spotless**: `spotlessCheck` now passes locally and on CI.
+- **Build**: `assembleDemoDebug` verified.
 
 ### Manual Verification
-- The app now displays a list of events on start.
-- The "Offline Mode" banner appears correctly when connectivity is lost.
+- Verified the list display and favorite toggle functionality.
+- Verified the offline indicator appears correctly when network is disabled.
 
+render_diffs(file:///Users/indioalba/Workspace/Festival/app/src/main/java/com/indioalba/festival/ui/events/EventsViewModel.kt)
 render_diffs(file:///Users/indioalba/Workspace/Festival/app/src/main/java/com/indioalba/festival/data/local/DatabaseSeeder.kt)
 render_diffs(file:///Users/indioalba/Workspace/Festival/app/src/main/java/com/indioalba/festival/MainActivity.kt)

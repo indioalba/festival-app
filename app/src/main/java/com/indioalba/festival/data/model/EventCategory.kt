@@ -7,5 +7,5 @@ enum class EventCategory {
     KIDS,
     RELIGIOUS,
     GASTRONOMY,
-    OTHER
+    OTHER,
 }

@@ -17,12 +17,12 @@ object DatabaseModule {
     @Provides
     @Singleton
     fun provideFestivalDatabase(
-        @ApplicationContext context: Context
+        @ApplicationContext context: Context,
     ): FestivalDatabase {
         return Room.databaseBuilder(
             context,
             FestivalDatabase::class.java,
-            "festival-database"
+            "festival-database",
         ).build()
     }
 

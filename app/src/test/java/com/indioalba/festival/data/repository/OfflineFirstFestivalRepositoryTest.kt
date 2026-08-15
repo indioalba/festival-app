@@ -28,7 +28,7 @@ class OfflineFirstFestivalRepositoryTest {
     @Test
     fun `refreshAgenda fetches from network and updates local database`() = runTest {
         val networkEvents = listOf(
-            Event(id = 1, title = "Concert", date = "2026-08-15", time = "20:00", category = "Music")
+            Event(id = 1, title = "Concert", date = "2026-08-15", time = "20:00", category = "Music"),
         )
         fakeApi.events = networkEvents
 
@@ -45,15 +45,15 @@ class OfflineFirstFestivalRepositoryTest {
     }
 
     class FakeEventDao : EventDao {
-        private val _events = MutableStateFlow<List<Event>>(emptyList())
-        override fun getAllEvents(): Flow<List<Event>> = _events
+        private val dbEvents = MutableStateFlow<List<Event>>(emptyList())
+        override fun getAllEvents(): Flow<List<Event>> = dbEvents
 
         override fun insertAll(events: List<Event>) {
-            _events.value = events
+            dbEvents.value = events
         }
 
         override fun getAnyEvent(): Event? {
-            return _events.value.firstOrNull()
+            return dbEvents.value.firstOrNull()
         }
 
         override fun getEvent(id: Int): Flow<Event?> = flowOf(null)
@@ -63,7 +63,7 @@ class OfflineFirstFestivalRepositoryTest {
         }
 
         override fun deleteAllEvents() {
-            _events.value = emptyList()
+            dbEvents.value = emptyList()
         }
     }
 }

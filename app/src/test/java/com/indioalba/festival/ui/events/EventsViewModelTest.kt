@@ -7,7 +7,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.test.StandardTestDispatcher
@@ -44,6 +44,9 @@ class EventsViewModelTest {
 
     @Test
     fun `Refresh intent triggers repository refresh`() = runTest {
+        backgroundScope.launch { viewModel.uiState.collect {} }
+        advanceUntilIdle()
+
         viewModel.onIntent(EventsIntent.Refresh)
         advanceUntilIdle()
         assertTrue(repository.refreshCalled)
@@ -51,6 +54,9 @@ class EventsViewModelTest {
 
     @Test
     fun `ToggleFavorite intent triggers repository toggle`() = runTest {
+        backgroundScope.launch { viewModel.uiState.collect {} }
+        advanceUntilIdle()
+
         viewModel.onIntent(EventsIntent.ToggleFavorite(1))
         advanceUntilIdle()
         assertEquals(1, repository.toggledId)
@@ -59,7 +65,7 @@ class EventsViewModelTest {
     @Test
     fun `state reflects connectivity changes`() = runTest {
         backgroundScope.launch { viewModel.uiState.collect {} }
-        
+
         connectivityObserver.status.value = ConnectivityObserver.Status.Lost
         advanceUntilIdle()
         assertTrue(viewModel.uiState.value.isOffline)

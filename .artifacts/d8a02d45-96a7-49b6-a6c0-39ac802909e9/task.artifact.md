@@ -1,8 +1,9 @@
-- [x] Add `getEvent` and `toggleFavorite` to `EventDao`
-- [ ] Implement `getEvent` and `toggleFavorite` in `FestivalRepository`
-- [x] Create `EventsUiState` data class
-- [x] Create `EventsIntent` sealed class
-- [x] Implement `EventsViewModel` with MVI logic
-- [x] Update `MainActivity` to use `EventsViewModel`
-- [x] Add unit tests for `EventsViewModel`
+- [x] Define `EventsStateChange` sealed class
+- [x] Implement `reducer` function in `EventsViewModel`
+- [x] Refactor `EventsViewModel` to use `scan` with the `reducer`
+- [x] Update `EventsViewModelTest`
 - [x] Verify build and functionality
+- [x] Fix CI failures in "Local tests and APKs"
+    - [x] Update Dependency Guard baselines
+    - [x] Fix spotless formatting issues
+    - [x] Align Roborazzi task with project rules

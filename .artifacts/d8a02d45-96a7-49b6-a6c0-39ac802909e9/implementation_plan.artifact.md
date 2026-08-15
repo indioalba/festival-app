@@ -1,66 +1,26 @@
-# Apply MVI Presentation Pattern
+# Use Reducer in MVI Pattern
 
-This plan refactors the event list logic to follow the MVI (Model-View-Intent) pattern as specified in `AGENTS.md`.
+This plan refactors the `EventsViewModel` to use a dedicated `reducer` function for state transitions, making the MVI implementation more explicit and easier to test.
 
 ## User Review Required
 
 > [!NOTE]
-> I will implement a standard MVI pattern using a single `UiState` stream and an `onIntent` function in the `ViewModel`.
+> The refactoring will introduce a `reduce` function and use the `scan` operator or a state-updating mechanism to manage transitions. This follows a more "standard" MVI architecture.
 
 ## Proposed Changes
 
-#### [MODIFY] [EventDao.kt](file:///Users/indioalba/Workspace/Festival/app/src/main/java/com/indioalba/festival/data/local/EventDao.kt)
-- Add `getEvent(id: Int): Flow<Event?>`.
-- Add `toggleFavorite(id: Int)`.
-
-#### [MODIFY] [FestivalRepository.kt](file:///Users/indioalba/Workspace/Festival/app/src/main/java/com/indioalba/festival/data/repository/FestivalRepository.kt)
-- Add `getEvent(id: Int): Flow<Event?>`.
-- Add `toggleFavorite(id: Int)`.
-
-#### [MODIFY] [OfflineFirstFestivalRepository.kt](file:///Users/indioalba/Workspace/Festival/app/src/main/java/com/indioalba/festival/data/repository/OfflineFirstFestivalRepository.kt)
-- Implement `getEvent` and `toggleFavorite` by delegating to the DAO.
-
----
-
 ### Presentation Layer
 
-#### [NEW] [EventsUiState.kt](file:///Users/indioalba/Workspace/Festival/app/src/main/java/com/indioalba/festival/ui/events/EventsUiState.kt)
-- Define the state of the events screen:
-    ```kotlin
-    data class EventsUiState(
-        val events: List<Event> = emptyList(),
-        val isLoading: Boolean = false,
-        val isOffline: Boolean = false
-    )
-    ```
+#### [MODIFY] [EventsViewModel.kt](file:///Users/indioalba/Workspace/Festival/app/src/main/java/com/indioalba/festival/ui/events/EventsViewModel.kt)
+- Introduce a `Result` or `StateChange` sealed class to represent partial updates to the state.
+- Implement a `reducer(previousState: EventsUiState, change: StateChange): EventsUiState` function.
+- Merge external data flows (Repository, Connectivity) into a single stream of `StateChange`s.
+- Use the `scan` operator to maintain and update the state.
 
-#### [NEW] [EventsIntent.kt](file:///Users/indioalba/Workspace/Festival/app/src/main/java/com/indioalba/festival/ui/events/EventsIntent.kt)
-- Define user actions:
-    ```kotlin
-    sealed class EventsIntent {
-        object Refresh : EventsIntent()
-        data class ToggleFavorite(val eventId: Int) : EventsIntent()
-    }
-    ```
-
-#### [NEW] [EventsViewModel.kt](file:///Users/indioalba/Workspace/Festival/app/src/main/java/com/indioalba/festival/ui/events/EventsViewModel.kt)
-- Implement `EventsViewModel` using Hilt.
-- Expose `uiState` as a `StateFlow`.
-- Handle `EventsIntent` to trigger repository actions.
-
-### UI Layer
-
-#### [MODIFY] [MainActivity.kt](file:///Users/indioalba/Workspace/Festival/app/src/main/java/com/indioalba/festival/MainActivity.kt)
-- Remove direct repository injection.
-- Use `EventsViewModel` to observe state and send intents.
-- Update UI components to react to `EventsUiState`.
-
-## Verification Plan
+### Verification Plan
 
 ### Automated Tests
-- Create `EventsViewModelTest` to verify that intents update the state correctly.
-- Ensure all existing tests pass with `./gradlew testDemoDebugUnitTest`.
+- Update `EventsViewModelTest` to ensure that state transitions occur correctly through the reducer.
 
 ### Manual Verification
-- Run the app and verify the list is still displayed correctly.
-- Verify the loading state (if applicable) and offline indicator.
+- Verify the app's functionality remains unchanged (list loading, favorite toggling, offline banner).

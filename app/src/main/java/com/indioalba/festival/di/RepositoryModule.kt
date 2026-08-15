@@ -14,6 +14,6 @@ abstract class RepositoryModule {
     @Binds
     @Singleton
     abstract fun bindFestivalRepository(
-        repository: OfflineFirstFestivalRepository
+        repository: OfflineFirstFestivalRepository,
     ): FestivalRepository
 }
