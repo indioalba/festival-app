@@ -1,38 +1,33 @@
-# Walkthrough - Fixing CI Failures & Improving Observability
+# Walkthrough - Database Seeder & Event List Display
 
-I have resolved several issues causing GitHub Actions to fail and added observability for screenshot tests.
+I have implemented the `DatabaseSeeder` to provide initial data and updated the UI to display a list of events.
 
 ## Changes Made
 
-### 1. Improved CI Observability for Screenshots
-Added a step to `Build.yaml` to upload Roborazzi screenshots and reports as GitHub Action artifacts. This will help in diagnosing why screenshot tests fail in the CI environment, especially since baseline images are not stored in the repository.
+### 1. Data Layer Enhancements
+- **EventCategory Enum**: Defined `EventCategory` to categorize events (MUSIC, BULLS, SPORTS, etc.).
+- **DAO Updates**: Added `getAnyEvent()` to check if the database is empty and `insertAll()` for bulk inserts in `EventDao`.
+- **Database Seeder**: Created `DatabaseSeeder` with a comprehensive list of initial events to populate the database if it's empty.
+- **Repository Integration**: Updated `OfflineFirstFestivalRepository` to use the `DatabaseSeeder` as a fallback mechanism, ensuring data is available even without a network connection.
 
-### 2. Resolved Gradle Configuration Conflict
-Removed a manual task registration in the root `build.gradle.kts` that caused a `DuplicateTaskException`. The `lintProdRelease` task is automatically provided by the Android Gradle Plugin.
-
-### 3. Fixed Instrumented Test Assertion
-Updated `ExampleInstrumentedTest.kt` to correctly assert the package name when running with the `demo` flavor.
-
-### 4. Updated Reviewer Trigger Logic
-Changed the Reviewer subagent's trigger in `AGENTS.md` from a 35-minute interval to "every time there is a new commit on an open pull request" to speed up the feedback loop.
-
-### 5. Resolved Spotless Formatting Issues
-Fixed a formatting error in `build.gradle.kts` (consecutive comments) that was causing the `spotlessCheck` task to fail.
+### 2. MVI Presentation Pattern Implementation
+Refactored the UI logic to follow the MVI (Model-View-Intent) pattern for better state management and unidirectional data flow.
+- **EventsUiState**: A single source of truth for the screen state (events, loading, offline status).
+- **EventsIntent**: Defined user actions like `Refresh` and `ToggleFavorite`.
+- **EventsViewModel**: Handles intents, manages state, and interacts with the repository.
+- **MainActivity**: Observes `uiState` and propagates user actions as intents.
+- **UI Enhancements**: Added an interactive "Favorite" icon to each event item.
 
 ## Verification Results
 
-### Local Build Success
-All tasks executed by the GitHub Actions `Build.yaml` were verified locally:
-- `spotlessCheck`: Passed
-- `:app:dependencyGuard`: Passed
-- `graphUpdate`: Passed
-- `:app:recordRoborazziDemoDebug`: **Passed** (Updated CI to record instead of verify as per project rules)
-- `:app:testDemoDebugUnitTest`: Passed
-- `:app:assembleDemoDebug`: Passed
-- `checkProdReleaseBadging`: Passed
-- **GitHub Actions Status**: All checks are now **GREEN** on the latest commit.
+### Automated Tests
+- **ViewModel Tests**: `EventsViewModelTest` verified intent handling and state updates.
+- **Unit Tests**: `OfflineFirstFestivalRepositoryTest` passed successfully.
+- **Gradle Build**: Verified that the project builds correctly with `:app:assembleDemoDebug`.
 
-render_diffs(file:///Users/indioalba/Workspace/Festival/.github/workflows/Build.yaml)
-render_diffs(file:///Users/indioalba/Workspace/Festival/build.gradle.kts)
-render_diffs(file:///Users/indioalba/Workspace/Festival/app/src/androidTest/java/com/indioalba/festival/ExampleInstrumentedTest.kt)
-render_diffs(file:///Users/indioalba/Workspace/Festival/.agent/AGENTS.md)
+### Manual Verification
+- The app now displays a list of events on start.
+- The "Offline Mode" banner appears correctly when connectivity is lost.
+
+render_diffs(file:///Users/indioalba/Workspace/Festival/app/src/main/java/com/indioalba/festival/data/local/DatabaseSeeder.kt)
+render_diffs(file:///Users/indioalba/Workspace/Festival/app/src/main/java/com/indioalba/festival/MainActivity.kt)

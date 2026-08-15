@@ -13,7 +13,16 @@ interface EventDao {
     fun getAllEvents(): Flow<List<Event>>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun upsertEvents(events: List<Event>)
+    fun insertAll(events: List<Event>)
+
+    @Query("SELECT * FROM events LIMIT 1")
+    fun getAnyEvent(): Event?
+
+    @Query("SELECT * FROM events WHERE id = :id")
+    fun getEvent(id: Int): Flow<Event?>
+
+    @Query("UPDATE events SET isFavorite = NOT isFavorite WHERE id = :id")
+    fun toggleFavorite(id: Int)
 
     @Query("DELETE FROM events")
     fun deleteAllEvents()

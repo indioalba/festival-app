@@ -8,6 +8,7 @@ related to the event.
 This project is a modern Android application that follows the official Clean Architecture guidance from Google using domain layer. It is a reactive, single-activity app that uses the following:
 
 -   **UI:** Built entirely with Jetpack Compose, including Material 3 components and adaptive layouts for different screen sizes.
+-   **Presentation pattern** Use MVI 
 -   **State Management:** Unidirectional Data Flow (UDF) is implemented using Kotlin Coroutines and `Flow`s. `ViewModel`s act as state holders, exposing UI state as streams of data.
 -   **Dependency Injection:** Hilt is used for dependency injection throughout the app, simplifying the management of dependencies and improving testability.
 -   **Navigation:** Navigation is handled by Jetpack Navigation 3 for Compose, allowing for a declarative and type-safe way to navigate between screens.
@@ -70,3 +71,4 @@ The app and Android libraries have two product flavors: `demo` and `prod`, and t
 - [Task: Fix CI Failures](file:///Users/indioalba/Workspace/Festival/docs/tasks/2026-08-14_fix_ci_failures.md)
 - [Task: Update Reviewer Trigger](file:///Users/indioalba/Workspace/Festival/docs/tasks/2026-08-14_update_reviewer_trigger.md)
 - [Task: Implement Local Caching for Events (Issue #5)](file:///Users/indioalba/Workspace/Festival/docs/tasks/2026-08-14_local_caching_issue_5.md)
+- [Task: Apply MVI Presentation Pattern](file:///Users/indioalba/Workspace/Festival/docs/tasks/2026-08-15_apply_mvi_pattern.md)

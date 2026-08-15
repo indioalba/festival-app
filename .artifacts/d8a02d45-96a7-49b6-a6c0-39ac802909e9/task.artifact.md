@@ -1,9 +1,8 @@
-- [x] Fix `DuplicateTaskException` in root `build.gradle.kts`
-- [x] Fix package name assertion in `ExampleInstrumentedTest.kt`
-- [x] Verify local build for all CI tasks
-- [x] Amend commit with fixes
-- [x] Update `.gitignore` to exclude local IDE state
-- [x] Fix spotless formatting in `build.gradle.kts`
-- [x] Investigate and fix CI failure in "Local tests and APKs" (Roborazzi)
-    - [x] Add artifact upload to `Build.yaml`
-    - [ ] Align Roborazzi task with "CI-generated" rule
+- [x] Add `getEvent` and `toggleFavorite` to `EventDao`
+- [ ] Implement `getEvent` and `toggleFavorite` in `FestivalRepository`
+- [x] Create `EventsUiState` data class
+- [x] Create `EventsIntent` sealed class
+- [x] Implement `EventsViewModel` with MVI logic
+- [x] Update `MainActivity` to use `EventsViewModel`
+- [x] Add unit tests for `EventsViewModel`
+- [x] Verify build and functionality

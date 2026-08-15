@@ -1,5 +1,6 @@
 package com.indioalba.festival.data.repository
 
+import com.indioalba.festival.data.local.DatabaseSeeder
 import com.indioalba.festival.data.local.EventDao
 import com.indioalba.festival.data.model.Event
 import com.indioalba.festival.data.remote.FestivalApi
@@ -14,14 +15,26 @@ class OfflineFirstFestivalRepository @Inject constructor(
 ) : FestivalRepository {
     override fun getAgenda(): Flow<List<Event>> = eventDao.getAllEvents()
 
+    override fun getEvent(id: Int): Flow<Event?> = eventDao.getEvent(id)
+
+    override suspend fun toggleFavorite(id: Int) {
+        withContext(Dispatchers.IO) {
+            eventDao.toggleFavorite(id)
+        }
+    }
+
     override suspend fun refreshAgenda(festivalId: String) {
         withContext(Dispatchers.IO) {
             try {
+                DatabaseSeeder.seedIfEmpty(eventDao)
                 val events = festivalApi.getAgenda(festivalId)
-                eventDao.deleteAllEvents()
-                eventDao.upsertEvents(events)
+                if (events.isNotEmpty()) {
+                    eventDao.deleteAllEvents()
+                    eventDao.insertAll(events)
+                }
             } catch (e: Exception) {
-                // Handle network errors or other issues
+                // Fallback to seeder if network fails and DB is empty
+                DatabaseSeeder.seedIfEmpty(eventDao)
                 e.printStackTrace()
             }
         }

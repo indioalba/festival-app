@@ -6,6 +6,7 @@ import com.indioalba.festival.data.remote.FestivalApi
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.test.runTest
 import org.junit.Assert.assertEquals
 import org.junit.Before
@@ -47,8 +48,18 @@ class OfflineFirstFestivalRepositoryTest {
         private val _events = MutableStateFlow<List<Event>>(emptyList())
         override fun getAllEvents(): Flow<List<Event>> = _events
 
-        override fun upsertEvents(events: List<Event>) {
+        override fun insertAll(events: List<Event>) {
             _events.value = events
+        }
+
+        override fun getAnyEvent(): Event? {
+            return _events.value.firstOrNull()
+        }
+
+        override fun getEvent(id: Int): Flow<Event?> = flowOf(null)
+
+        override fun toggleFavorite(id: Int) {
+            // No-op for now
         }
 
         override fun deleteAllEvents() {
