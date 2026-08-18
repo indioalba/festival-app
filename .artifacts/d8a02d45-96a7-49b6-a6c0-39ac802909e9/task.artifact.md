@@ -1,9 +1,8 @@
-- [x] Define `EventsStateChange` sealed class
-- [x] Implement `reducer` function in `EventsViewModel`
-- [x] Refactor `EventsViewModel` to use `scan` with the `reducer`
-- [x] Update `EventsViewModelTest`
-- [x] Verify build and functionality
-- [x] Fix CI failures in "Local tests and APKs"
-    - [x] Update Dependency Guard baselines
-    - [x] Fix spotless formatting issues
-    - [x] Align Roborazzi task with project rules
+- `[/]` Implement new UI features (Issue #7)
+    - `[x]` Add `coil-compose` dependency
+    - `[x]` Implement `SplashScreen`
+    - `[x]` Refactor `EventsUiState` and `EventsIntent`
+    - `[x]` Update `EventsViewModel` logic (3s splash, grouping by day)
+    - `[x]` Implement `MainScreen` with `TabRow` and `HorizontalPager`
+    - `[x]` Design `EventItem` with icons (category, location, favorite)
+    - `[x]` Verify functionality and tests

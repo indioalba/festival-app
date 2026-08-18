@@ -7,10 +7,10 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.test.StandardTestDispatcher
+import kotlinx.coroutines.test.advanceTimeBy
 import kotlinx.coroutines.test.advanceUntilIdle
 import kotlinx.coroutines.test.runTest
 import kotlinx.coroutines.test.setMain
@@ -19,6 +19,7 @@ import org.junit.Assert.assertFalse
 import org.junit.Assert.assertTrue
 import org.junit.Before
 import org.junit.Test
+import kotlin.time.Duration.Companion.milliseconds
 
 @OptIn(ExperimentalCoroutinesApi::class)
 class EventsViewModelTest {
@@ -37,9 +38,10 @@ class EventsViewModelTest {
     }
 
     @Test
-    fun `initial state is loading`() = runTest {
+    fun `initial state is loading and showing splash`() = runTest {
         val uiState = viewModel.uiState.value
         assertTrue(uiState.isLoading)
+        assertTrue(uiState.showSplash)
     }
 
     @Test
@@ -65,6 +67,7 @@ class EventsViewModelTest {
     @Test
     fun `state reflects connectivity changes`() = runTest {
         backgroundScope.launch { viewModel.uiState.collect {} }
+        advanceUntilIdle()
 
         connectivityObserver.status.value = ConnectivityObserver.Status.Lost
         advanceUntilIdle()
@@ -73,6 +76,28 @@ class EventsViewModelTest {
         connectivityObserver.status.value = ConnectivityObserver.Status.Available
         advanceUntilIdle()
         assertFalse(viewModel.uiState.value.isOffline)
+    }
+
+    @Test
+    fun `Splash is dismissed after delay`() = runTest {
+        backgroundScope.launch { viewModel.uiState.collect {} }
+        // Initially splash is shown
+        assertTrue(viewModel.uiState.value.showSplash)
+        
+        advanceTimeBy(3001.milliseconds)
+        advanceUntilIdle()
+        assertFalse(viewModel.uiState.value.showSplash)
+    }
+
+    @Test
+    fun `SelectDay intent updates selected index`() = runTest {
+        backgroundScope.launch { viewModel.uiState.collect {} }
+        advanceUntilIdle()
+        
+        viewModel.onIntent(EventsIntent.SelectDay(2))
+        advanceUntilIdle()
+        
+        assertEquals(2, viewModel.uiState.value.selectedDayIndex)
     }
 
     // Fakes

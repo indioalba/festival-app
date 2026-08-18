@@ -20,6 +20,9 @@ import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
+import kotlinx.coroutines.delay
+import kotlin.time.Duration.Companion.milliseconds
+
 @OptIn(ExperimentalCoroutinesApi::class)
 @HiltViewModel
 class EventsViewModel @Inject constructor(
@@ -27,7 +30,7 @@ class EventsViewModel @Inject constructor(
     private val connectivityObserver: ConnectivityObserver,
 ) : ViewModel() {
 
-    private val intents = MutableSharedFlow<EventsIntent>()
+    private val intents = MutableSharedFlow<EventsIntent>(extraBufferCapacity = 1)
 
     val uiState: StateFlow<EventsUiState> = merge(
         repository.getAgenda().map { StateChange.DataLoaded(it) },
@@ -44,6 +47,10 @@ class EventsViewModel @Inject constructor(
     )
 
     init {
+        viewModelScope.launch {
+            delay(3000.milliseconds)
+            onIntent(EventsIntent.DismissSplash)
+        }
         onIntent(EventsIntent.Refresh)
     }
 
@@ -61,16 +68,31 @@ class EventsViewModel @Inject constructor(
         }
         is EventsIntent.ToggleFavorite -> {
             repository.toggleFavoriteFlow(intent.eventId)
-                .map { StateChange.None } // Toggling favorite updates the DB, which triggers repository.getAgenda()
+                .map { StateChange.None }
+        }
+        is EventsIntent.DismissSplash -> {
+            kotlinx.coroutines.flow.flowOf(StateChange.SplashDismissed)
+        }
+        is EventsIntent.ToggleFavoritesFilter -> {
+            kotlinx.coroutines.flow.flowOf(StateChange.FavoritesFilterToggled)
+        }
+        is EventsIntent.SelectDay -> {
+            kotlinx.coroutines.flow.flowOf(StateChange.DaySelected(intent.index))
         }
     }
 
     private fun reduce(state: EventsUiState, change: StateChange): EventsUiState = when (change) {
-        is StateChange.DataLoaded -> state.copy(events = change.events, isLoading = false)
+        is StateChange.DataLoaded -> {
+            val days = change.events.map { it.date }.distinct().sorted()
+            state.copy(events = change.events, days = days, isLoading = false)
+        }
         is StateChange.ConnectivityChanged -> state.copy(
             isOffline = change.status != ConnectivityObserver.Status.Available,
         )
         is StateChange.Loading -> state.copy(isLoading = change.isLoading)
+        is StateChange.SplashDismissed -> state.copy(showSplash = false)
+        is StateChange.FavoritesFilterToggled -> state.copy(isFilteredByFavorites = !state.isFilteredByFavorites)
+        is StateChange.DaySelected -> state.copy(selectedDayIndex = change.index)
         is StateChange.None -> state
     }
 
@@ -78,6 +100,9 @@ class EventsViewModel @Inject constructor(
         data class DataLoaded(val events: List<Event>) : StateChange()
         data class ConnectivityChanged(val status: ConnectivityObserver.Status) : StateChange()
         data class Loading(val isLoading: Boolean) : StateChange()
+        object SplashDismissed : StateChange()
+        object FavoritesFilterToggled : StateChange()
+        data class DaySelected(val index: Int) : StateChange()
         object None : StateChange()
     }
 }

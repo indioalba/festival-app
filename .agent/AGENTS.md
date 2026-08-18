@@ -73,3 +73,4 @@ The app and Android libraries have two product flavors: `demo` and `prod`, and t
 - [Task: Implement Local Caching for Events (Issue #5)](file:///Users/indioalba/Workspace/Festival/docs/tasks/2026-08-14_local_caching_issue_5.md)
 - [Task: Apply MVI Presentation Pattern](file:///Users/indioalba/Workspace/Festival/docs/tasks/2026-08-15_apply_mvi_pattern.md)
 - [Task: MVI Reducer Refactoring](file:///Users/indioalba/Workspace/Festival/docs/tasks/2026-08-15_mvi_reducer_refactoring.md)
+- [Task: Create UI (Issue #7)](file:///Users/indioalba/Workspace/Festival/docs/tasks/2026-08-18_create_ui_issue_7.md)
