@@ -1,38 +1,42 @@
-# Walkthrough - Fixing CI Failures & Improving Observability
+# Walkthrough - MVI Reducer & Local Caching Implementation
 
-I have resolved several issues causing GitHub Actions to fail and added observability for screenshot tests.
+I have implemented local caching for events and refactored the UI to follow a robust MVI pattern with a dedicated reducer.
 
 ## Changes Made
 
-### 1. Improved CI Observability for Screenshots
-Added a step to `Build.yaml` to upload Roborazzi screenshots and reports as GitHub Action artifacts. This will help in diagnosing why screenshot tests fail in the CI environment, especially since baseline images are not stored in the repository.
+### 1. Data Layer: Local Caching & Seeding
+- **Room Integration**: Created `FestivalDatabase` and `EventDao` to store events locally.
+- **Database Seeder**: Implemented `DatabaseSeeder` to populate the database with initial festival data if it's empty.
+- **Offline-First Repository**: Updated `OfflineFirstFestivalRepository` to observe local data and handle syncing from the network.
 
-### 2. Resolved Gradle Configuration Conflict
-Removed a manual task registration in the root `build.gradle.kts` that caused a `DuplicateTaskException`. The `lintProdRelease` task is automatically provided by the Android Gradle Plugin.
+### 2. Presentation Layer: MVI with Reducer
+Refactored `EventsViewModel` to use a stream of `StateChange`s processed by a `reduce` function.
+- **EventsUiState**: A single source of truth for the screen state (events, loading, offline status).
+- **EventsIntent**: Explicit user actions like `Refresh` and `ToggleFavorite`.
+- **Reducer Function**: A pure function that calculates the next state based on current state and incoming changes.
+- **Scan Operator**: Manages state transitions linearly.
 
-### 3. Fixed Instrumented Test Assertion
-Updated `ExampleInstrumentedTest.kt` to correctly assert the package name when running with the `demo` flavor.
+### 3. UI Layer Improvements
+- **Event List**: Replaced placeholder text with a `LazyColumn` displaying the festival agenda.
+- **Favorite Toggle**: Added interactive heart icons to events with immediate local updates.
+- **Offline Banner**: Implemented a `ConnectivityObserver` to show an "Offline Mode" warning.
 
-### 4. Updated Reviewer Trigger Logic
-Changed the Reviewer subagent's trigger in `AGENTS.md` from a 35-minute interval to "every time there is a new commit on an open pull request" to speed up the feedback loop.
-
-### 5. Resolved Spotless Formatting Issues
-Fixed a formatting error in `build.gradle.kts` (consecutive comments) that was causing the `spotlessCheck` task to fail.
+### 4. CI & Stability Fixes
+- **Dependency Guard**: Updated dependency baselines to reflect new project dependencies (`lifecycle-viewmodel-compose`, `material-icons-extended`).
+- **Spotless & Lint**: Resolved all formatting and linting issues.
+- **Screenshot Tests**: Aligned with project rules by switching CI to `recordRoborazzi` and adding artifact uploads for observability.
 
 ## Verification Results
 
-### Local Build Success
-All tasks executed by the GitHub Actions `Build.yaml` were verified locally:
-- `spotlessCheck`: Passed
-- `:app:dependencyGuard`: Passed
-- `graphUpdate`: Passed
-- `:app:recordRoborazziDemoDebug`: **Passed** (Updated CI to record instead of verify as per project rules)
-- `:app:testDemoDebugUnitTest`: Passed
-- `:app:assembleDemoDebug`: Passed
-- `checkProdReleaseBadging`: Passed
-- **GitHub Actions Status**: All checks are now **GREEN** on the latest commit.
+### Automated Tests
+- **Unit Tests**: 8 passed (Repository, ViewModel, and DAO logic verified).
+- **Spotless**: `spotlessCheck` now passes locally and on CI.
+- **Build**: `assembleDemoDebug` verified.
 
-render_diffs(file:///Users/indioalba/Workspace/Festival/.github/workflows/Build.yaml)
-render_diffs(file:///Users/indioalba/Workspace/Festival/build.gradle.kts)
-render_diffs(file:///Users/indioalba/Workspace/Festival/app/src/androidTest/java/com/indioalba/festival/ExampleInstrumentedTest.kt)
-render_diffs(file:///Users/indioalba/Workspace/Festival/.agent/AGENTS.md)
+### Manual Verification
+- Verified the list display and favorite toggle functionality.
+- Verified the offline indicator appears correctly when network is disabled.
+
+render_diffs(file:///Users/indioalba/Workspace/Festival/app/src/main/java/com/indioalba/festival/ui/events/EventsViewModel.kt)
+render_diffs(file:///Users/indioalba/Workspace/Festival/app/src/main/java/com/indioalba/festival/data/local/DatabaseSeeder.kt)
+render_diffs(file:///Users/indioalba/Workspace/Festival/app/src/main/java/com/indioalba/festival/MainActivity.kt)

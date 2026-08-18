@@ -1,9 +1,9 @@
-- [x] Fix `DuplicateTaskException` in root `build.gradle.kts`
-- [x] Fix package name assertion in `ExampleInstrumentedTest.kt`
-- [x] Verify local build for all CI tasks
-- [x] Amend commit with fixes
-- [x] Update `.gitignore` to exclude local IDE state
-- [x] Fix spotless formatting in `build.gradle.kts`
-- [x] Investigate and fix CI failure in "Local tests and APKs" (Roborazzi)
-    - [x] Add artifact upload to `Build.yaml`
-    - [ ] Align Roborazzi task with "CI-generated" rule
+- [x] Define `EventsStateChange` sealed class
+- [x] Implement `reducer` function in `EventsViewModel`
+- [x] Refactor `EventsViewModel` to use `scan` with the `reducer`
+- [x] Update `EventsViewModelTest`
+- [x] Verify build and functionality
+- [x] Fix CI failures in "Local tests and APKs"
+    - [x] Update Dependency Guard baselines
+    - [x] Fix spotless formatting issues
+    - [x] Align Roborazzi task with project rules
