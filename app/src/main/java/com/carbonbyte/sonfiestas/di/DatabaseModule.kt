@@ -23,7 +23,8 @@ object DatabaseModule {
             context,
             FestivalDatabase::class.java,
             "festival-database",
-        ).build()
+        ).fallbackToDestructiveMigration()
+            .build()
     }
 
     @Provides

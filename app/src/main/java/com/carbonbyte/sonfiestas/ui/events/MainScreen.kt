@@ -18,6 +18,7 @@ import androidx.compose.foundation.pager.rememberPagerState
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.AccountBalance
 import androidx.compose.material.icons.filled.ChildCare
+import androidx.compose.material.icons.filled.Church
 import androidx.compose.material.icons.filled.Event
 import androidx.compose.material.icons.filled.Favorite
 import androidx.compose.material.icons.filled.FavoriteBorder
@@ -26,6 +27,7 @@ import androidx.compose.material.icons.filled.MusicNote
 import androidx.compose.material.icons.filled.Pets
 import androidx.compose.material.icons.filled.Restaurant
 import androidx.compose.material.icons.filled.SportsBasketball
+import androidx.compose.material.icons.filled.Stadium
 import androidx.compose.material3.CenterAlignedTopAppBar
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.HorizontalDivider
@@ -259,10 +261,10 @@ fun OfflineIndicator() {
 fun getCategoryIcon(category: String): ImageVector {
     return when (category) {
         EventCategory.MUSIC.name -> Icons.Default.MusicNote
-        EventCategory.BULLS.name -> Icons.Default.Pets
+        EventCategory.BULLS.name -> Icons.Default.Stadium
         EventCategory.SPORTS.name -> Icons.Default.SportsBasketball
         EventCategory.KIDS.name -> Icons.Default.ChildCare
-        EventCategory.RELIGIOUS.name -> Icons.Default.AccountBalance
+        EventCategory.RELIGIOUS.name -> Icons.Default.Church
         EventCategory.GASTRONOMY.name -> Icons.Default.Restaurant
         else -> Icons.Default.Event
     }

@@ -16,7 +16,7 @@ object DatabaseSeeder {
         // Sábado, 11 de octubre
         Event(title = "Feria del Barro", date = "2025-10-11", time = "Todo el día", location = "Plaza de Toros", category = EventCategory.OTHER.name),
         Event(title = "Charanga", date = "2025-10-11", time = "16:00h", category = EventCategory.MUSIC.name),
-        Event(title = "Toro de Cajón, Capea", date = "2025-10-11", time = "17:00h", category = EventCategory.BULLS.name, location = "Plaza de Toro", imageUrl = "https://albadetormes.com/opencms/export/sites/albadetormes/.Archivos/Imagenes/2025/fiestasagosto/cabeceratransverberacion2025.png"),
+        Event(title = "Toro de Cajón, Capea y posterior fiesta con dj harry", date = "2025-10-11", time = "17:00h", category = EventCategory.BULLS.name, location = "Plaza de Toro", imageUrl = "https://albadetormes.com/opencms/export/sites/albadetormes/.Archivos/Imagenes/2025/fiestasagosto/cabeceratransverberacion2025.png"),
         Event(title = "Encierro nocturno", date = "2025-10-11", time = "22:00h", category = EventCategory.BULLS.name, imageUrl = "https://s1.elespanol.com/2021/10/16/actualidad/619948594_211821965_1706x960.jpg"),
         Event(title = "Capea", date = "2025-10-11", time = "22:15h", category = EventCategory.BULLS.name, imageUrl = "https://s1.elespanol.com/2021/10/16/actualidad/619948594_211821965_1706x960.jpg"),
 
