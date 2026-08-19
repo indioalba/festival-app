@@ -50,7 +50,6 @@ fun SplashScreen(modifier: Modifier = Modifier) {
             Spacer(modifier = Modifier.height(8.dp))
             Text(
                 text = "Del 21 al 27 de agosto 2026",
-                color = festivalRed,
                 fontSize = 20.sp,
                 fontWeight = FontWeight.Medium,
                 fontFamily = FontFamily.Serif,
