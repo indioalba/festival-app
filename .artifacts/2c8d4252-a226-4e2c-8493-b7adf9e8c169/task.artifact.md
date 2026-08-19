@@ -1,5 +1,7 @@
-# Tasks - Update Festival Events
+# Tasks - Configure Release Signing
 
-- `[ ]` Update `initialEvents` list in `DatabaseSeeder.kt` with new 2026 events.
-- `[ ]` Verify changes by running `analyze_file` on `DatabaseSeeder.kt`.
-- `[ ]` Create walkthrough artifact.
+- `[x]` Generate Keystore (done by user).
+- `[x]` Update `local.properties` with keystore placeholders.
+- `[x]` Configure `signingConfigs` in `app/build.gradle.kts`.
+- `[x]` Link `release` build type to the new signing config.
+- `[x]` Create walkthrough and final instructions for the user.

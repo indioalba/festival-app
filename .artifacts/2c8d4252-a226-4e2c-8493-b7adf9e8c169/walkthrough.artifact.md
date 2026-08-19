@@ -1,21 +1,38 @@
-# Walkthrough - Updated Festival Events for 2026
+# Walkthrough - Configured Release Signing for Play Store
 
-I have updated the `DatabaseSeeder.kt` file to include the full schedule of events for the 2026 festival as requested.
+I have configured the project to support release signing for the Play Store. The setup uses `local.properties` to store sensitive information securely without committing it to Git.
 
 ## Changes Made
 
-### [Data Layer]
+### [Build Configuration]
 
-#### [DatabaseSeeder.kt](file:///Users/indioalba/Workspace/Festival/app/src/main/java/com/carbonbyte/sonfiestas/data/local/DatabaseSeeder.kt)
-- Replaced the previous `initialEvents` list with the new comprehensive list for August 2026.
-- Categorized all events using the `EventCategory` enum (MUSIC, BULLS, SPORTS, KIDS, RELIGIOUS, GASTRONOMY, OTHER).
-- Corrected dates for late-night events occurring after midnight (e.g., events at 00:30 on Saturday were moved to Sunday 23/08).
-- Ensured all locations and times match the provided list.
+#### [MODIFY] [app/build.gradle.kts](file:///Users/indioalba/Workspace/Festival/app/build.gradle.kts)
+- Added logic to load properties from `local.properties`.
+- Defined a `release` signing configuration.
+- Linked the `release` build type to use this signing configuration.
 
-## Verification Results
+### [Local Configuration]
 
-### Automated Tests
-- Ran `analyze_file` on `DatabaseSeeder.kt` to ensure syntax correctness. The file is syntactically valid.
+#### [MODIFY] [local.properties](file:///Users/indioalba/Workspace/Festival/local.properties)
+- Added the following keys for you to fill:
+    - `RELEASE_STORE_FILE`: Set to `../festival-release-key.jks` (pointing to the file you created).
+    - `RELEASE_STORE_PASSWORD`: **Action Required** (Leave empty or fill).
+    - `RELEASE_KEY_ALIAS`: Set to `festival-alias`.
+    - `RELEASE_KEY_PASSWORD`: **Action Required** (Leave empty or fill).
 
-### Manual Verification
-- Verified each event entry against the provided list to ensure accuracy in titles, dates, times, and locations.
+## Final Steps for You
+
+To generate the bundle, please follow these steps:
+
+1.  **Fill Passwords**: Open your [local.properties](file:///Users/indioalba/Workspace/Festival/local.properties) file and fill in the passwords you used when creating the keystore:
+    - `RELEASE_STORE_PASSWORD=your_keystore_password`
+    - `RELEASE_KEY_PASSWORD=your_key_password`
+2.  **Build the Bundle**: Run the following command in your terminal:
+    ```bash
+    ./gradlew :app:bundleProdRelease
+    ```
+3.  **Locate the File**: Once the build finishes, your bundle will be available at:
+    `app/build/outputs/bundle/prodRelease/app-prod-release.aab`
+
+> [!CAUTION]
+> Never share your `local.properties` file or the `festival-release-key.jks` file. Keep them in a safe place (like a password manager or secure backup).

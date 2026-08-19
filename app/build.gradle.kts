@@ -1,3 +1,6 @@
+import java.util.Properties
+import java.io.FileInputStream
+
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.compose)
@@ -6,6 +9,12 @@ plugins {
     alias(libs.plugins.ksp)
     alias(libs.plugins.dependencyGuard)
     alias(libs.plugins.roborazzi)
+}
+
+val keystoreProperties = Properties()
+val keystorePropertiesFile = rootProject.file("local.properties")
+if (keystorePropertiesFile.exists()) {
+    keystoreProperties.load(FileInputStream(keystorePropertiesFile))
 }
 
 android {
@@ -22,6 +31,15 @@ android {
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
 
+    signingConfigs {
+        create("release") {
+            storeFile = keystoreProperties["RELEASE_STORE_FILE"]?.let { file(it) }
+            storePassword = keystoreProperties["RELEASE_STORE_PASSWORD"] as String?
+            keyAlias = keystoreProperties["RELEASE_KEY_ALIAS"] as String?
+            keyPassword = keystoreProperties["RELEASE_KEY_PASSWORD"] as String?
+        }
+    }
+
     testOptions {
         unitTests {
             isIncludeAndroidResources = true
@@ -30,6 +48,7 @@ android {
 
     buildTypes {
         release {
+            signingConfig = signingConfigs.getByName("release")
             optimization {
                 enable = false
             }
