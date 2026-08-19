@@ -48,7 +48,7 @@ class EventsViewModel @Inject constructor(
 
     init {
         viewModelScope.launch {
-            delay(1000.milliseconds)
+            delay(1500.milliseconds)
             onIntent(EventsIntent.DismissSplash)
         }
         onIntent(EventsIntent.Refresh)

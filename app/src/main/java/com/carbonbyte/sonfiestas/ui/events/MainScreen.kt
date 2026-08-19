@@ -1,13 +1,14 @@
 package com.carbonbyte.sonfiestas.ui.events
 
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
@@ -16,7 +17,6 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.pager.HorizontalPager
 import androidx.compose.foundation.pager.rememberPagerState
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.AccountBalance
 import androidx.compose.material.icons.filled.ChildCare
 import androidx.compose.material.icons.filled.Church
 import androidx.compose.material.icons.filled.Event
@@ -24,7 +24,6 @@ import androidx.compose.material.icons.filled.Favorite
 import androidx.compose.material.icons.filled.FavoriteBorder
 import androidx.compose.material.icons.filled.LocationOn
 import androidx.compose.material.icons.filled.MusicNote
-import androidx.compose.material.icons.filled.Pets
 import androidx.compose.material.icons.filled.Restaurant
 import androidx.compose.material.icons.filled.SportsBasketball
 import androidx.compose.material.icons.filled.Stadium
@@ -43,33 +42,35 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.snapshotFlow
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
 import coil.request.ImageRequest
+import com.carbonbyte.sonfiestas.R
 import com.carbonbyte.sonfiestas.data.model.Event
 import com.carbonbyte.sonfiestas.data.model.EventCategory
 import java.text.SimpleDateFormat
 import java.util.Locale
 
 private val VibrantTabColors = listOf(
-    Color(0xFF4527A0), // Deep Purple 800
-    Color(0xFF283593), // Indigo 800
-    Color(0xFF00695C), // Teal 800
     Color(0xFFAD1457), // Pink 800
     Color(0xFFD84315), // Deep Orange 800
     Color(0xFF1565C0), // Blue 800
-    Color(0xFF4E342E)  // Brown 800
+    Color(0xFF4E342E),  // Brown 800
+    Color(0xFF4527A0), // Deep Purple 800
+    Color(0xFF283593), // Indigo 800
+    Color(0xFF00695C) // Teal 800
 )
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -96,21 +97,32 @@ fun MainScreen(uiState: EventsUiState, onIntent: (EventsIntent) -> Unit) {
                 if (uiState.isOffline) {
                     OfflineIndicator()
                 }
-                CenterAlignedTopAppBar(
-                    title = { Text("Fiestas Agosto '26", fontWeight = FontWeight.Bold) },
-                    actions = {
-                        IconButton(onClick = { onIntent(EventsIntent.ToggleFavoritesFilter) }) {
-                            Icon(
-                                imageVector = if (uiState.isFilteredByFavorites) Icons.Default.Favorite else Icons.Default.FavoriteBorder,
-                                contentDescription = "Filter Favorites",
-                                tint = if (uiState.isFilteredByFavorites) Color.Red else MaterialTheme.colorScheme.onSurface
-                            )
-                        }
-                    },
-                    colors = TopAppBarDefaults.topAppBarColors(
-                        containerColor = MaterialTheme.colorScheme.surface
+                Box(modifier = Modifier.background(Color.White)) {
+                    Image(
+                        painter = painterResource(id = R.drawable.splash_fiestas_agosto2026),
+                        contentDescription = null,
+                        modifier = Modifier
+                            .matchParentSize()
+                            .alpha(0.3f),
+                        contentScale = ContentScale.FillWidth,
+                        alignment = Alignment.BottomCenter
                     )
-                )
+                    CenterAlignedTopAppBar(
+                        title = { Text("Fiestas Agosto '26", fontWeight = FontWeight.Bold) },
+                        actions = {
+                            IconButton(onClick = { onIntent(EventsIntent.ToggleFavoritesFilter) }) {
+                                Icon(
+                                    imageVector = if (uiState.isFilteredByFavorites) Icons.Default.Favorite else Icons.Default.FavoriteBorder,
+                                    contentDescription = "Filter Favorites",
+                                    tint = if (uiState.isFilteredByFavorites) Color.Red else MaterialTheme.colorScheme.onSurface
+                                )
+                            }
+                        },
+                        colors = TopAppBarDefaults.topAppBarColors(
+                            containerColor = Color.Transparent
+                        )
+                    )
+                }
                 if (uiState.days.isNotEmpty()) {
                     val screenWidth = LocalConfiguration.current.screenWidthDp.dp
                     ScrollableTabRow(
@@ -132,8 +144,9 @@ fun MainScreen(uiState: EventsUiState, onIntent: (EventsIntent) -> Unit) {
                         uiState.days.forEachIndexed { index, day ->
                             val isSelected = pagerState.currentPage == index
                             val baseColor = VibrantTabColors[index % VibrantTabColors.size]
-                            val backgroundColor = if (isSelected) baseColor else baseColor.copy(alpha = 0.5f)
-                            
+                            val backgroundColor =
+                                if (isSelected) baseColor else baseColor.copy(alpha = 0.5f)
+
                             Tab(
                                 selected = isSelected,
                                 onClick = { onIntent(EventsIntent.SelectDay(index)) },
@@ -198,18 +211,32 @@ fun EventItem(event: Event, onToggleFavorite: (Int) -> Unit) {
             .fillMaxWidth()
             .clickable { onToggleFavorite(event.id) }
             .padding(16.dp),
-        verticalAlignment = Alignment.CenterVertically
+        verticalAlignment = Alignment.Top
     ) {
-        Icon(
-            imageVector = getCategoryIcon(event.category),
-            contentDescription = null,
-            modifier = Modifier.size(24.dp),
-            tint = MaterialTheme.colorScheme.primary
-        )
+        Column(modifier = Modifier.weight(0.25f)) {
+            Text(
+                modifier = Modifier
+                    .align(Alignment.CenterHorizontally),
+                text = event.time,
+                style = MaterialTheme.typography.titleMedium,
+                color = Color.Gray
+            )
+            Icon(
+                imageVector = getCategoryIcon(event.category),
+                contentDescription = null,
+                modifier = Modifier
+                    .size(24.dp)
+                    .align(Alignment.CenterHorizontally),
+                tint = MaterialTheme.colorScheme.primary
+            )
+        }
         Spacer(modifier = Modifier.width(16.dp))
-        Column(modifier = Modifier.weight(1f)) {
-            Text(text = event.time, style = MaterialTheme.typography.labelMedium, color = Color.Gray)
-            Text(text = event.title, style = MaterialTheme.typography.titleMedium, fontWeight = FontWeight.Bold)
+        Column(modifier = Modifier.weight(0.75f)) {
+            Text(
+                text = event.title,
+                style = MaterialTheme.typography.titleMedium,
+                fontWeight = FontWeight.Bold
+            )
             if (event.location != null) {
                 Row(verticalAlignment = Alignment.CenterVertically) {
                     Icon(
@@ -219,7 +246,11 @@ fun EventItem(event: Event, onToggleFavorite: (Int) -> Unit) {
                         tint = Color.Gray
                     )
                     Spacer(modifier = Modifier.width(4.dp))
-                    Text(text = event.location, style = MaterialTheme.typography.bodySmall, color = Color.Gray)
+                    Text(
+                        text = event.location,
+                        style = MaterialTheme.typography.bodySmall,
+                        color = Color.Gray
+                    )
                 }
             }
         }
@@ -230,7 +261,9 @@ fun EventItem(event: Event, onToggleFavorite: (Int) -> Unit) {
                     .crossfade(true)
                     .build(),
                 contentDescription = null,
-                modifier = Modifier.size(60.dp).padding(horizontal = 8.dp),
+                modifier = Modifier
+                    .size(60.dp)
+                    .padding(horizontal = 8.dp),
                 contentScale = ContentScale.Crop
             )
         }
@@ -275,7 +308,7 @@ fun formatDateTab(dateString: String): String {
         val parser = SimpleDateFormat("yyyy-MM-dd", Locale.US)
         val formatter = SimpleDateFormat("d EEEE", Locale.forLanguageTag("es-ES"))
         val date = parser.parse(dateString)
-        date?.let { 
+        date?.let {
             val formatted = formatter.format(it)
             // Capitalize the first letter of each word (e.g., "22 Lunes")
             formatted.split(" ").joinToString(" ") { word ->
@@ -295,8 +328,20 @@ fun MainScreenPreview() {
         days = listOf("2026-08-21", "2026-08-22", "2026-08-23", "2026-08-24"),
         selectedDayIndex = 1,
         events = listOf(
-            Event(id = 1, title = "Event 1", date = "2026-08-22", time = "10:00", category = EventCategory.MUSIC.name),
-            Event(id = 2, title = "Event 2", date = "2026-08-22", time = "12:00", category = EventCategory.SPORTS.name)
+            Event(
+                id = 1,
+                title = "Event 1",
+                date = "2026-08-22",
+                time = "10:00 - 12:30 / 17:00 h - 22:00h",
+                category = EventCategory.MUSIC.name
+            ),
+            Event(
+                id = 2,
+                title = "Event 2",
+                date = "2026-08-22",
+                time = "12:00",
+                category = EventCategory.SPORTS.name
+            )
         )
     )
     MaterialTheme {
