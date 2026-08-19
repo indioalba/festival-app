@@ -9,11 +9,11 @@ plugins {
 }
 
 android {
-    namespace = "com.indioalba.festival"
+    namespace = "com.carbonbyte.sonfiestas"
     compileSdk = 37
 
     defaultConfig {
-        applicationId = "com.indioalba.festival"
+        applicationId = "com.carbonbyte.sonfiestas"
         minSdk = 24
         targetSdk = 36
         versionCode = 1
