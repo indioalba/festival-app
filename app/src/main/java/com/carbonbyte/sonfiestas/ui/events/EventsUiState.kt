@@ -10,11 +10,4 @@ data class EventsUiState(
     val isLoading: Boolean = false,
     val isOffline: Boolean = false,
     val isFilteredByFavorites: Boolean = false
-) {
-    val filteredEvents: List<Event>
-        get() {
-            val selectedDay = days.getOrNull(selectedDayIndex) ?: return emptyList()
-            return events.filter { it.date == selectedDay }
-                .filter { if (isFilteredByFavorites) it.isFavorite else true }
-        }
-}
+)
