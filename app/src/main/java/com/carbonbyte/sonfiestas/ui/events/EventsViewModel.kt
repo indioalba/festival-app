@@ -84,7 +84,11 @@ class EventsViewModel @Inject constructor(
     private fun reduce(state: EventsUiState, change: StateChange): EventsUiState = when (change) {
         is StateChange.DataLoaded -> {
             val days = change.events.map { it.date }.distinct().sorted()
-            state.copy(events = change.events, days = days, isLoading = false)
+            state.copy(
+                events = change.events,
+                days = days,
+                isLoading = false
+            )
         }
         is StateChange.ConnectivityChanged -> state.copy(
             isOffline = change.status != ConnectivityObserver.Status.Available,
