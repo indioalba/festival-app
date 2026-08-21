@@ -1,7 +1,6 @@
-# Tasks - Revert Auto-navigation Changes
+# Tasks - Enable GitHub Action Checks
 
-- `[ ]` Remove `hasAutoNavigated` flag from `EventsUiState.kt`.
-- `[ ]` Simplify `reduce` function and remove date logic in `EventsViewModel.kt`.
-- `[ ]` Revert tab selection logic in `MainScreen.kt` to use `pagerState.currentPage`.
-- `[ ]` Verify the app defaults to the first day and behaves manually.
-- `[ ]` Create walkthrough artifact.
+- `[x]` Update `.github/workflows/Build.yaml` to trigger PR checks.
+- `[x]` Fix repository filter in `.github/workflows/Release.yml`.
+- `[x]` Fix repository filter in `.github/workflows/NightlyBaselineProfiles.yaml`.
+- `[x]` Verify changes by checking for active GitHub Actions.

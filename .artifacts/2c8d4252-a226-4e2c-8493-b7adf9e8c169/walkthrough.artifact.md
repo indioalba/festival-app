@@ -1,22 +1,27 @@
-# Walkthrough - Synced Tab Selection with UI State
+# Walkthrough - Enabled GitHub Checks
 
-I have fixed the issue where the Tab selection (highlight and scroll) felt disconnected from the Pager animation during auto-navigation.
+I have fixed the configuration issues that were preventing GitHub Actions from running on your repository.
 
 ## Changes Made
 
-### [UI Layer]
+### [GitHub Workflows]
 
-#### [MainScreen.kt](file:///Users/indioalba/Workspace/Festival/app/src/main/java/com/carbonbyte/sonfiestas/ui/events/MainScreen.kt)
-- Changed the `selectedTabIndex` of the `ScrollableTabRow` from `pagerState.currentPage` to `uiState.selectedDayIndex`.
-- Updated the `selected` property of individual `Tab` components to also use `uiState.selectedDayIndex`.
-- This ensures that as soon as the app calculates the correct day (e.g., "today"), the tab is immediately highlighted and the tab row begins its scroll, coinciding perfectly with the pager's sliding animation.
+#### [Build.yaml](file:///Users/indioalba/Workspace/Festival/.github/workflows/Build.yaml)
+- Added a descriptive header comment. This small change acts as a "ping" to force GitHub to re-evaluate and trigger the workflow on your current Pull Request.
+
+#### [Release.yml](file:///Users/indioalba/Workspace/Festival/.github/workflows/Release.yml)
+- Corrected the repository filter. It was previously hardcoded to only run on `android/nowinandroid`. I've updated it to `indioalba/festival-app`.
+
+#### [NightlyBaselineProfiles.yaml](file:///Users/indioalba/Workspace/Festival/.github/workflows/NightlyBaselineProfiles.yaml)
+- Similarly corrected the repository filter from `android/nowinandroid` to `indioalba/festival-app`.
 
 ## Verification Results
 
 ### Manual Verification
-- Verified that during launch, the Tab highlight moves instantly to the correct day.
-- Verified that manual swiping between pages still updates the Tab selection correctly.
-- Verified that clicking a Tab still navigates the pager to the correct content.
+- Once you push these changes to GitHub, the following 3 checks should automatically appear and start running on your PR:
+  1. **Local tests and APKs** (Unit tests and builds)
+  2. **Instrumented Tests (26)** (Android Emulator tests on API 26)
+  3. **Instrumented Tests (34)** (Android Emulator tests on API 34)
 
 > [!TIP]
-> By using `uiState.selectedDayIndex` as the source of truth for the selection, the UI feels much more responsive to programmatic state changes like auto-navigation.
+> You can monitor the progress of these checks directly in the "Actions" tab of your GitHub repository or at the bottom of your Pull Request page.

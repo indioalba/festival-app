@@ -62,7 +62,7 @@ The app and Android libraries have two product flavors: `demo` and `prod`, and t
 
 ## Version control and code location
 
-- The project uses git and is hosted in https://github.com/android/nowinandroid.
+- The project uses git and is hosted in https://github.com/indioalba/festival-app.
 
 ## Documentation
 - Everytime you perform a task, add to docs the description of what has been done, the date and time and the files touched.
