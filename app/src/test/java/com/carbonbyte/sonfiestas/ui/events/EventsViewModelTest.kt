@@ -83,7 +83,7 @@ class EventsViewModelTest {
         backgroundScope.launch { viewModel.uiState.collect {} }
         // Initially splash is shown
         assertTrue(viewModel.uiState.value.showSplash)
-        
+
         advanceTimeBy(3001.milliseconds)
         advanceUntilIdle()
         assertFalse(viewModel.uiState.value.showSplash)
@@ -93,10 +93,10 @@ class EventsViewModelTest {
     fun `SelectDay intent updates selected index`() = runTest {
         backgroundScope.launch { viewModel.uiState.collect {} }
         advanceUntilIdle()
-        
+
         viewModel.onIntent(EventsIntent.SelectDay(2))
         advanceUntilIdle()
-        
+
         assertEquals(2, viewModel.uiState.value.selectedDayIndex)
     }
 

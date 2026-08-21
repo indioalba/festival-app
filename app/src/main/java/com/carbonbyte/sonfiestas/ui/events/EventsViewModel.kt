@@ -7,6 +7,7 @@ import com.carbonbyte.sonfiestas.data.repository.FestivalRepository
 import com.carbonbyte.sonfiestas.util.ConnectivityObserver
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.SharingStarted
@@ -19,8 +20,6 @@ import kotlinx.coroutines.flow.scan
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 import javax.inject.Inject
-
-import kotlinx.coroutines.delay
 import kotlin.time.Duration.Companion.milliseconds
 
 @OptIn(ExperimentalCoroutinesApi::class)
@@ -87,7 +86,7 @@ class EventsViewModel @Inject constructor(
             state.copy(
                 events = change.events,
                 days = days,
-                isLoading = false
+                isLoading = false,
             )
         }
         is StateChange.ConnectivityChanged -> state.copy(

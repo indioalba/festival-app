@@ -27,17 +27,17 @@ import com.carbonbyte.sonfiestas.R
 @Composable
 fun SplashScreen(modifier: Modifier = Modifier) {
     val festivalRed = Color(0xFFD32F2F)
-    
+
     Box(
         modifier = modifier
             .fillMaxSize()
-            .background(Color.White)
+            .background(Color.White),
     ) {
         Column(
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(top = 64.dp, start = 24.dp, end = 24.dp),
-            horizontalAlignment = Alignment.CenterHorizontally
+            horizontalAlignment = Alignment.CenterHorizontally,
         ) {
             Text(
                 text = "Alba de Tormes",
@@ -45,7 +45,7 @@ fun SplashScreen(modifier: Modifier = Modifier) {
                 fontSize = 32.sp,
                 fontWeight = FontWeight.Bold,
                 fontFamily = FontFamily.Serif,
-                textAlign = TextAlign.Center
+                textAlign = TextAlign.Center,
             )
             Spacer(modifier = Modifier.height(8.dp))
             Text(
@@ -53,7 +53,7 @@ fun SplashScreen(modifier: Modifier = Modifier) {
                 fontSize = 20.sp,
                 fontWeight = FontWeight.Medium,
                 fontFamily = FontFamily.Serif,
-                textAlign = TextAlign.Center
+                textAlign = TextAlign.Center,
             )
             Spacer(modifier = Modifier.height(16.dp))
             Text(
@@ -61,7 +61,7 @@ fun SplashScreen(modifier: Modifier = Modifier) {
                 color = festivalRed,
                 fontSize = 18.sp,
                 fontFamily = FontFamily.Serif,
-                textAlign = TextAlign.Center
+                textAlign = TextAlign.Center,
             )
         }
 
@@ -70,7 +70,7 @@ fun SplashScreen(modifier: Modifier = Modifier) {
             contentDescription = "Splash Screen",
             modifier = Modifier.fillMaxSize(),
             contentScale = ContentScale.FillWidth,
-            alignment = Alignment.BottomCenter
+            alignment = Alignment.BottomCenter,
         )
     }
 }

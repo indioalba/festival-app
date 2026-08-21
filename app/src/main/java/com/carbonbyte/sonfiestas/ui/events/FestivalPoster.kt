@@ -31,14 +31,14 @@ fun FestivalPoster(modifier: Modifier = Modifier) {
             painter = painterResource(id = R.drawable.splash_fiestas_agosto2026),
             contentDescription = null,
             modifier = Modifier.fillMaxSize(),
-            contentScale = ContentScale.Crop
+            contentScale = ContentScale.Crop,
         )
 
         Column(
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(top = 24.dp),
-            horizontalAlignment = Alignment.CenterHorizontally
+            horizontalAlignment = Alignment.CenterHorizontally,
         ) {
             Text(
                 text = stringResource(id = R.string.poster_title),
@@ -46,7 +46,7 @@ fun FestivalPoster(modifier: Modifier = Modifier) {
                 fontSize = 42.sp,
                 fontWeight = FontWeight.Bold,
                 fontFamily = FontFamily.Serif,
-                textAlign = TextAlign.Center
+                textAlign = TextAlign.Center,
             )
             Text(
                 text = stringResource(id = R.string.poster_dates),
@@ -55,7 +55,7 @@ fun FestivalPoster(modifier: Modifier = Modifier) {
                 fontWeight = FontWeight.Bold,
                 fontFamily = FontFamily.Serif,
                 textAlign = TextAlign.Center,
-                modifier = Modifier.offset(y = (-4).dp)
+                modifier = Modifier.offset(y = (-4).dp),
             )
             Text(
                 text = stringResource(id = R.string.poster_subtitle),
@@ -64,7 +64,7 @@ fun FestivalPoster(modifier: Modifier = Modifier) {
                 fontWeight = FontWeight.Normal,
                 fontFamily = FontFamily.Serif,
                 textAlign = TextAlign.Center,
-                modifier = Modifier.padding(horizontal = 32.dp)
+                modifier = Modifier.padding(horizontal = 32.dp),
             )
         }
 
@@ -78,7 +78,7 @@ fun FestivalPoster(modifier: Modifier = Modifier) {
             modifier = Modifier
                 .align(Alignment.CenterStart)
                 .padding(start = 16.dp)
-                .offset(y = 40.dp)
+                .offset(y = 40.dp),
         )
     }
 }

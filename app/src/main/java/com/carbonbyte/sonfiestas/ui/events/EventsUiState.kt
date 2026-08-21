@@ -9,5 +9,5 @@ data class EventsUiState(
     val selectedDayIndex: Int = 0,
     val isLoading: Boolean = false,
     val isOffline: Boolean = false,
-    val isFilteredByFavorites: Boolean = false
+    val isFilteredByFavorites: Boolean = false,
 )

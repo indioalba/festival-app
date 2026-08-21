@@ -67,10 +67,10 @@ private val VibrantTabColors = listOf(
     Color(0xFFAD1457), // Pink 800
     Color(0xFFD84315), // Deep Orange 800
     Color(0xFF1565C0), // Blue 800
-    Color(0xFF4E342E),  // Brown 800
+    Color(0xFF4E342E), // Brown 800
     Color(0xFF4527A0), // Deep Purple 800
     Color(0xFF283593), // Indigo 800
-    Color(0xFF00695C) // Teal 800
+    Color(0xFF00695C), // Teal 800
 )
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -105,7 +105,7 @@ fun MainScreen(uiState: EventsUiState, onIntent: (EventsIntent) -> Unit) {
                             .matchParentSize()
                             .alpha(0.3f),
                         contentScale = ContentScale.FillWidth,
-                        alignment = Alignment.BottomCenter
+                        alignment = Alignment.BottomCenter,
                     )
                     CenterAlignedTopAppBar(
                         title = { Text("Fiestas Agosto '26", fontWeight = FontWeight.Bold) },
@@ -114,13 +114,13 @@ fun MainScreen(uiState: EventsUiState, onIntent: (EventsIntent) -> Unit) {
                                 Icon(
                                     imageVector = if (uiState.isFilteredByFavorites) Icons.Default.Favorite else Icons.Default.FavoriteBorder,
                                     contentDescription = "Filter Favorites",
-                                    tint = if (uiState.isFilteredByFavorites) Color.Red else MaterialTheme.colorScheme.onSurface
+                                    tint = if (uiState.isFilteredByFavorites) Color.Red else MaterialTheme.colorScheme.onSurface,
                                 )
                             }
                         },
                         colors = TopAppBarDefaults.topAppBarColors(
-                            containerColor = Color.Transparent
-                        )
+                            containerColor = Color.Transparent,
+                        ),
                     )
                 }
                 if (uiState.days.isNotEmpty()) {
@@ -136,10 +136,10 @@ fun MainScreen(uiState: EventsUiState, onIntent: (EventsIntent) -> Unit) {
                                 TabRowDefaults.SecondaryIndicator(
                                     modifier = Modifier.tabIndicatorOffset(tabPositions[pagerState.currentPage]),
                                     height = 4.dp,
-                                    color = Color.White
+                                    color = Color.White,
                                 )
                             }
-                        }
+                        },
                     ) {
                         uiState.days.forEachIndexed { index, day ->
                             val isSelected = pagerState.currentPage == index
@@ -162,21 +162,21 @@ fun MainScreen(uiState: EventsUiState, onIntent: (EventsIntent) -> Unit) {
                                         fontWeight = if (isSelected) FontWeight.ExtraBold else FontWeight.Bold,
                                         style = MaterialTheme.typography.labelLarge,
                                         maxLines = 1,
-                                        softWrap = false
+                                        softWrap = false,
                                     )
-                                }
+                                },
                             )
                         }
                     }
                 }
             }
-        }
+        },
     ) { innerPadding ->
         HorizontalPager(
             state = pagerState,
             modifier = Modifier
                 .fillMaxSize()
-                .padding(innerPadding)
+                .padding(innerPadding),
         ) { pageIndex ->
             val selectedDay = uiState.days.getOrNull(pageIndex)
             val eventsForDay = uiState.events
@@ -185,7 +185,7 @@ fun MainScreen(uiState: EventsUiState, onIntent: (EventsIntent) -> Unit) {
 
             EventList(
                 events = eventsForDay,
-                onToggleFavorite = { id -> onIntent(EventsIntent.ToggleFavorite(id)) }
+                onToggleFavorite = { id -> onIntent(EventsIntent.ToggleFavorite(id)) },
             )
         }
     }
@@ -194,7 +194,7 @@ fun MainScreen(uiState: EventsUiState, onIntent: (EventsIntent) -> Unit) {
 @Composable
 fun EventList(
     events: List<Event>,
-    onToggleFavorite: (Int) -> Unit
+    onToggleFavorite: (Int) -> Unit,
 ) {
     LazyColumn(modifier = Modifier.fillMaxSize()) {
         items(events, key = { it.id }) { event ->
@@ -211,7 +211,7 @@ fun EventItem(event: Event, onToggleFavorite: (Int) -> Unit) {
             .fillMaxWidth()
             .clickable { onToggleFavorite(event.id) }
             .padding(16.dp),
-        verticalAlignment = Alignment.Top
+        verticalAlignment = Alignment.Top,
     ) {
         Column(modifier = Modifier.weight(0.25f)) {
             Text(
@@ -219,7 +219,7 @@ fun EventItem(event: Event, onToggleFavorite: (Int) -> Unit) {
                     .align(Alignment.CenterHorizontally),
                 text = event.time,
                 style = MaterialTheme.typography.titleMedium,
-                color = Color.Gray
+                color = Color.Gray,
             )
             Icon(
                 imageVector = getCategoryIcon(event.category),
@@ -227,7 +227,7 @@ fun EventItem(event: Event, onToggleFavorite: (Int) -> Unit) {
                 modifier = Modifier
                     .size(24.dp)
                     .align(Alignment.CenterHorizontally),
-                tint = MaterialTheme.colorScheme.primary
+                tint = MaterialTheme.colorScheme.primary,
             )
         }
         Spacer(modifier = Modifier.width(16.dp))
@@ -235,7 +235,7 @@ fun EventItem(event: Event, onToggleFavorite: (Int) -> Unit) {
             Text(
                 text = event.title,
                 style = MaterialTheme.typography.titleMedium,
-                fontWeight = FontWeight.Bold
+                fontWeight = FontWeight.Bold,
             )
             if (event.location != null) {
                 Row(verticalAlignment = Alignment.CenterVertically) {
@@ -243,13 +243,13 @@ fun EventItem(event: Event, onToggleFavorite: (Int) -> Unit) {
                         imageVector = Icons.Default.LocationOn,
                         contentDescription = null,
                         modifier = Modifier.size(12.dp),
-                        tint = Color.Gray
+                        tint = Color.Gray,
                     )
                     Spacer(modifier = Modifier.width(4.dp))
                     Text(
                         text = event.location,
                         style = MaterialTheme.typography.bodySmall,
-                        color = Color.Gray
+                        color = Color.Gray,
                     )
                 }
             }
@@ -264,14 +264,14 @@ fun EventItem(event: Event, onToggleFavorite: (Int) -> Unit) {
                 modifier = Modifier
                     .size(60.dp)
                     .padding(horizontal = 8.dp),
-                contentScale = ContentScale.Crop
+                contentScale = ContentScale.Crop,
             )
         }
         IconButton(onClick = { onToggleFavorite(event.id) }) {
             Icon(
                 imageVector = if (event.isFavorite) Icons.Default.Favorite else Icons.Default.FavoriteBorder,
                 contentDescription = "Favorite",
-                tint = if (event.isFavorite) Color.Red else Color.Gray
+                tint = if (event.isFavorite) Color.Red else Color.Gray,
             )
         }
     }
@@ -287,7 +287,7 @@ fun OfflineIndicator() {
             .padding(8.dp),
         color = Color.White,
         textAlign = TextAlign.Center,
-        style = MaterialTheme.typography.labelMedium
+        style = MaterialTheme.typography.labelMedium,
     )
 }
 
@@ -333,16 +333,16 @@ fun MainScreenPreview() {
                 title = "Event 1",
                 date = "2026-08-22",
                 time = "10:00 - 12:30 / 17:00 h - 22:00h",
-                category = EventCategory.MUSIC.name
+                category = EventCategory.MUSIC.name,
             ),
             Event(
                 id = 2,
                 title = "Event 2",
                 date = "2026-08-22",
                 time = "12:00",
-                category = EventCategory.SPORTS.name
-            )
-        )
+                category = EventCategory.SPORTS.name,
+            ),
+        ),
     )
     MaterialTheme {
         MainScreen(uiState = uiState, onIntent = {})
