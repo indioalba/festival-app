@@ -26,14 +26,30 @@ class OfflineFirstFestivalRepository @Inject constructor(
     override suspend fun refreshAgenda(festivalId: String) {
         withContext(Dispatchers.IO) {
             try {
+                // Pre-seed if empty to have something while fetching
                 DatabaseSeeder.seedIfEmpty(eventDao)
+
                 val events = festivalApi.getAgenda(festivalId)
                 if (events.isNotEmpty()) {
-                    eventDao.deleteAllEvents()
-                    eventDao.insertAll(events)
+                    // Preserve favorites based on title, date and time
+                    val currentFavorites = eventDao.getAllEventsSync()
+                        .filter { it.isFavorite }
+                        .map { "${it.title}|${it.date}|${it.time}" }
+                        .toSet()
+
+                    val updatedEvents = events.map { event ->
+                        val key = "${event.title}|${event.date}|${event.time}"
+                        if (currentFavorites.contains(key)) {
+                            event.copy(isFavorite = true)
+                        } else {
+                            event
+                        }
+                    }
+
+                    eventDao.refreshEvents(updatedEvents)
                 }
             } catch (e: Exception) {
-                // Fallback to seeder if network fails and DB is empty
+                // Ensure we have at least seed data if anything fails
                 DatabaseSeeder.seedIfEmpty(eventDao)
                 e.printStackTrace()
             }

@@ -8,22 +8,31 @@ import com.carbonbyte.sonfiestas.data.model.Event
 import kotlinx.coroutines.flow.Flow
 
 @Dao
-interface EventDao {
+abstract class EventDao {
     @Query("SELECT * FROM events")
-    fun getAllEvents(): Flow<List<Event>>
+    abstract fun getAllEvents(): Flow<List<Event>>
+
+    @Query("SELECT * FROM events")
+    abstract fun getAllEventsSync(): List<Event>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun insertAll(events: List<Event>)
+    abstract fun insertAll(events: List<Event>)
 
     @Query("SELECT * FROM events LIMIT 1")
-    fun getAnyEvent(): Event?
+    abstract fun getAnyEvent(): Event?
 
     @Query("SELECT * FROM events WHERE id = :id")
-    fun getEvent(id: Int): Flow<Event?>
+    abstract fun getEvent(id: Int): Flow<Event?>
 
     @Query("UPDATE events SET isFavorite = NOT isFavorite WHERE id = :id")
-    fun toggleFavorite(id: Int)
+    abstract fun toggleFavorite(id: Int)
 
     @Query("DELETE FROM events")
-    fun deleteAllEvents()
+    abstract fun deleteAllEvents()
+
+    @androidx.room.Transaction
+    open fun refreshEvents(events: List<Event>) {
+        deleteAllEvents()
+        insertAll(events)
+    }
 }
