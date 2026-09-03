@@ -53,7 +53,7 @@ The app and Android libraries have two product flavors: `demo` and `prod`, and t
 - When there is an open issue, create a subagent "Coder" and perform the task and the tests
 - When the subagent is done, create a pull request
 - Create a subagent "Reviewer" that reviews every time there is a new commit on an open pull request, reviews the code following best practises and makes comments with the problem and the possible solution on the pull request, if there is any. In case everything is fine, just write "Everything is fine"
-- If any of the checks fail or if there is any problem in the review, ask "Coder" to fix the problem. Otherwise, just merge to main.
+- If any of the checks fail or if there is any problem in the review, ask "Coder" to fix the problem accordingly and change the test if required. Otherwise, just merge to main.
 
 ## Continuous integration
 

@@ -44,9 +44,10 @@ class OfflineFirstFestivalRepositoryTest {
         override suspend fun getAgenda(festivalId: String): List<Event> = events
     }
 
-    class FakeEventDao : EventDao {
+    class FakeEventDao : EventDao() {
         private val dbEvents = MutableStateFlow<List<Event>>(emptyList())
         override fun getAllEvents(): Flow<List<Event>> = dbEvents
+        override fun getAllEventsSync(): List<Event> = dbEvents.value
 
         override fun insertAll(events: List<Event>) {
             dbEvents.value = events
