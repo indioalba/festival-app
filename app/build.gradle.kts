@@ -1,3 +1,6 @@
+import java.io.FileInputStream
+import java.util.Properties
+
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.compose)
@@ -8,18 +11,33 @@ plugins {
     alias(libs.plugins.roborazzi)
 }
 
+val keystoreProperties = Properties()
+val keystorePropertiesFile = rootProject.file("local.properties")
+if (keystorePropertiesFile.exists()) {
+    keystoreProperties.load(FileInputStream(keystorePropertiesFile))
+}
+
 android {
-    namespace = "com.indioalba.festival"
+    namespace = "com.carbonbyte.sonfiestas"
     compileSdk = 37
 
     defaultConfig {
-        applicationId = "com.indioalba.festival"
+        applicationId = "com.carbonbyte.sonfiestas"
         minSdk = 24
         targetSdk = 36
-        versionCode = 1
+        versionCode = 5
         versionName = "1.0"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+    }
+
+    signingConfigs {
+        create("release") {
+            storeFile = keystoreProperties["RELEASE_STORE_FILE"]?.let { file(it) }
+            storePassword = keystoreProperties["RELEASE_STORE_PASSWORD"] as String?
+            keyAlias = keystoreProperties["RELEASE_KEY_ALIAS"] as String?
+            keyPassword = keystoreProperties["RELEASE_KEY_PASSWORD"] as String?
+        }
     }
 
     testOptions {
@@ -30,8 +48,9 @@ android {
 
     buildTypes {
         release {
+            signingConfig = signingConfigs.getByName("release")
             optimization {
-                enable = false
+                enable = true
             }
         }
         debug {
@@ -47,8 +66,6 @@ android {
         }
         create("prod") {
             dimension = "version"
-            applicationIdSuffix = ".prod"
-            versionNameSuffix = "-prod"
         }
     }
     compileOptions {
@@ -76,6 +93,7 @@ dependencies {
     implementation(libs.androidx.lifecycle.runtime.ktx)
     implementation(libs.androidx.lifecycle.viewmodel.compose)
     implementation(libs.androidx.compose.material.icons.extended)
+    implementation(libs.coil.compose)
 
     // Retrofit
     implementation(libs.retrofit.core)

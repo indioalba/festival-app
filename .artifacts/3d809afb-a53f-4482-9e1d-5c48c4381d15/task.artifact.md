@@ -1,0 +1,7 @@
+- `[x]` Update package in `ExampleUnitTest.kt`
+- `[x]` Update package and imports in `EventsViewModelTest.kt`
+- `[x]` Update package and imports in `OfflineFirstFestivalRepositoryTest.kt`
+- `[x]` Update package in `FestivalApiTest.kt`
+- `[x]` Run `./gradlew clean`
+- `[x]` Verify build with `./gradlew :app:hiltJavaCompileDemoDebug`
+- `[x]` Run unit tests with `./gradlew test`

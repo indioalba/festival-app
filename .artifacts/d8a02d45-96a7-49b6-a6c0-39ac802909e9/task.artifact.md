@@ -1,3 +1,11 @@
+- `[/]` Implement new UI features (Issue #7)
+    - `[x]` Add `coil-compose` dependency
+    - `[x]` Implement `SplashScreen`
+    - `[x]` Refactor `EventsUiState` and `EventsIntent`
+    - `[x]` Update `EventsViewModel` logic (3s splash, grouping by day)
+    - `[x]` Implement `MainScreen` with `TabRow` and `HorizontalPager`
+    - `[x]` Design `EventItem` with icons (category, location, favorite)
+    - `[x]` Verify functionality and tests
 - [x] Define `EventsStateChange` sealed class
 - [x] Implement `reducer` function in `EventsViewModel`
 - [x] Refactor `EventsViewModel` to use `scan` with the `reducer`

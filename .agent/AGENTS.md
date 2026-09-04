@@ -7,7 +7,7 @@ related to the event.
 
 This project is a modern Android application that follows the official Clean Architecture guidance from Google using domain layer. It is a reactive, single-activity app that uses the following:
 
--   **UI:** Built entirely with Jetpack Compose, including Material 3 components and adaptive layouts for different screen sizes.
+-   **UI:** Built entirely with Jetpack Compose, including Material 3 components and adaptive layouts for different screen sizes and rotation.
 -   **Presentation pattern** Use MVI 
 -   **State Management:** Unidirectional Data Flow (UDF) is implemented using Kotlin Coroutines and `Flow`s. `ViewModel`s act as state holders, exposing UI state as streams of data.
 -   **Dependency Injection:** Hilt is used for dependency injection throughout the app, simplifying the management of dependencies and improving testability.
@@ -53,7 +53,7 @@ The app and Android libraries have two product flavors: `demo` and `prod`, and t
 - When there is an open issue, create a subagent "Coder" and perform the task and the tests
 - When the subagent is done, create a pull request
 - Create a subagent "Reviewer" that reviews every time there is a new commit on an open pull request, reviews the code following best practises and makes comments with the problem and the possible solution on the pull request, if there is any. In case everything is fine, just write "Everything is fine"
-- If any of the checks fail or if there is any problem in the review, ask "Coder" to fix the problem. Otherwise, just merge to main.
+- If any of the checks fail or if there is any problem in the review, ask "Coder" to fix the problem accordingly and change the test if required. Otherwise, just merge to main.
 
 ## Continuous integration
 
@@ -62,7 +62,7 @@ The app and Android libraries have two product flavors: `demo` and `prod`, and t
 
 ## Version control and code location
 
-- The project uses git and is hosted in https://github.com/android/nowinandroid.
+- The project uses git and is hosted in https://github.com/indioalba/festival-app.
 
 ## Documentation
 - Everytime you perform a task, add to docs the description of what has been done, the date and time and the files touched.
@@ -73,3 +73,4 @@ The app and Android libraries have two product flavors: `demo` and `prod`, and t
 - [Task: Implement Local Caching for Events (Issue #5)](file:///Users/indioalba/Workspace/Festival/docs/tasks/2026-08-14_local_caching_issue_5.md)
 - [Task: Apply MVI Presentation Pattern](file:///Users/indioalba/Workspace/Festival/docs/tasks/2026-08-15_apply_mvi_pattern.md)
 - [Task: MVI Reducer Refactoring](file:///Users/indioalba/Workspace/Festival/docs/tasks/2026-08-15_mvi_reducer_refactoring.md)
+- [Task: Create UI (Issue #7)](file:///Users/indioalba/Workspace/Festival/docs/tasks/2026-08-18_create_ui_issue_7.md)
