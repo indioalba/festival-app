@@ -25,13 +25,13 @@ import kotlin.time.Duration.Companion.milliseconds
 @OptIn(ExperimentalCoroutinesApi::class)
 @HiltViewModel
 class EventsViewModel @Inject constructor(
-    private val repository: FestivalRepository,
+    private val festivalRepository: FestivalRepository,
     private val connectivityObserver: ConnectivityObserver,
 ) : ViewModel() {
 
     private val intents = MutableSharedFlow<EventsIntent>(replay = 0)
     val uiState: StateFlow<EventsUiState> = merge(
-        repository.getAgenda().map { StateChange.DataLoaded(it) },
+        festivalRepository.getAgenda().map { StateChange.DataLoaded(it) },
         connectivityObserver.observe().map { StateChange.ConnectivityChanged(it) },
         intents.flatMapLatest { intent ->
             handleIntent(intent)
@@ -60,12 +60,12 @@ class EventsViewModel @Inject constructor(
 
     private fun handleIntent(intent: EventsIntent): Flow<StateChange> = when (intent) {
         is EventsIntent.Refresh -> {
-            repository.refreshAgendaFlow("default")
+            festivalRepository.refreshAgendaFlow("default")
                 .map { StateChange.Loading(it) }
                 .onStart { emit(StateChange.Loading(true)) }
         }
         is EventsIntent.ToggleFavorite -> {
-            repository.toggleFavoriteFlow(intent.eventId)
+            festivalRepository.toggleFavoriteFlow(intent.eventId)
                 .map { StateChange.None }
         }
         is EventsIntent.DismissSplash -> {
