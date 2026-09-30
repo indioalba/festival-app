@@ -6,6 +6,7 @@ import com.carbonbyte.sonfiestas.data.model.Event
 import com.carbonbyte.sonfiestas.data.remote.FestivalApi
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.onStart
 import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
@@ -14,6 +15,9 @@ class OfflineFirstFestivalRepository @Inject constructor(
     private val eventDao: EventDao,
 ) : FestivalRepository {
     override fun getAgenda(): Flow<List<Event>> = eventDao.getAllEvents()
+        .onStart {
+            DatabaseSeeder.seedIfEmpty(eventDao)
+        }
 
     override fun getEvent(id: Int): Flow<Event?> = eventDao.getEvent(id)
 

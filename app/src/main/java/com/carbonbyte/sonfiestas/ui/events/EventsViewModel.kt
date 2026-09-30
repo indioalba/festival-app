@@ -29,7 +29,7 @@ class EventsViewModel @Inject constructor(
     private val connectivityObserver: ConnectivityObserver,
 ) : ViewModel() {
 
-    private val intents = MutableSharedFlow<EventsIntent>(replay = 0)
+    private val intents = MutableSharedFlow<EventsIntent>(extraBufferCapacity = 64)
     val uiState: StateFlow<EventsUiState> = merge(
         festivalRepository.getAgenda().map { StateChange.DataLoaded(it) },
         connectivityObserver.observe().map { StateChange.ConnectivityChanged(it) },
