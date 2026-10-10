@@ -22,7 +22,7 @@ object DatabaseSeeder {
         Event(title = "Inauguración Feria del Barro con Grupo Charro Albense", date = "2026-10-10", time = "13:00h", location = "Plaza Mayor", category = EventCategory.MUSIC.name),
         Event(title = "Pasacalles con charanga", date = "2026-10-10", time = "13h a 15h", location = "Calles de la Villa", category = EventCategory.MUSIC.name),
         Event(title = "Fútbol Sala: CD Albense FS vs Vilalba FS", date = "2026-10-10", time = "16:00h", location = "Pabellón Municipal", category = EventCategory.SPORTS.name),
-        Event(title = "Toro del Cajón (2 toros)", date = "2026-10-10", time = "17:00h", location = "C/ Peñaranda, C/ Beltrana, Curva Sur, C/ Norte y Plaza de Toros", category = EventCategory.BULLS.name),
+        Event(title = "Toro del Cajón (3 toros)", date = "2026-10-10", time = "17:00h", location = "C/ Peñaranda, C/ Beltrana, Curva Sur, C/ Norte y Plaza de Toros", category = EventCategory.BULLS.name),
         Event(title = "Capea popular de toros con charanga", date = "2026-10-10", time = "18:00h", location = "Plaza de Toros", category = EventCategory.BULLS.name),
         Event(title = "Demostración de pintura creativa (técnica persa)", date = "2026-10-10", time = "18:00h", location = "Plaza Mayor", category = EventCategory.OTHER.name),
         Event(title = "Talleres de torno simultáneos", date = "2026-10-10", time = "20:30h", location = "Plaza Mayor", category = EventCategory.OTHER.name),
