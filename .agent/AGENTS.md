@@ -1,4 +1,4 @@
-# Now in Android Project
+# Festival app
 Festival is a native Android mobile application written in Kotlin. It provides the agenda of
 the festival. Users can filter events by category, add to favorites and see the information 
 related to the event.

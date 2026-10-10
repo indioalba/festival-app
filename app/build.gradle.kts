@@ -25,8 +25,8 @@ android {
         applicationId = "com.carbonbyte.sonfiestas"
         minSdk = 24
         targetSdk = 36
-        versionCode = 5
-        versionName = "1.0"
+        versionCode = 7
+        versionName = "1.2"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
@@ -52,6 +52,10 @@ android {
             optimization {
                 enable = true
             }
+            proguardFiles(
+                getDefaultProguardFile("proguard-android-optimize.txt"),
+                "proguard-rules.pro",
+            )
         }
         debug {
             enableUnitTestCoverage = true

@@ -1,7 +1,9 @@
 <resources>
     <string name="app_name">Fiestas Alba de Tormes</string>
     <string name="poster_title">ALBA DE TORMES</string>
-    <string name="poster_dates">DEL 21 AL 27 DE AGOSTO 2026</string>
+    <string name="poster_dates">DEL 10 AL 22 DE OCTUBRE 2026</string>
     <string name="poster_subtitle">FIESTAS DE LA TRANSVERBERACIÓN DE SANTA TERESA DE JESÚS</string>
-    <string name="poster_vertical_text">TRANS\nVERBERA\nCION</string>
+    <string name="fiestas_poster_title">Fiestas</string>
+    <string name="fiestas_poster_location">Alba de Tormes</string>
+    <string name="fiestas_poster_content_description">Cartel de Fiestas de Alba de Tormes</string>
 </resources>

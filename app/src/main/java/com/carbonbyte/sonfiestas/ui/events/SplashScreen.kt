@@ -66,7 +66,7 @@ fun SplashScreen(modifier: Modifier = Modifier) {
         }
 
         Image(
-            painter = painterResource(id = R.drawable.splash_fiestas_agosto2026_small),
+            painter = painterResource(id = R.drawable.splash_fiestas_alba_de_tormes_10),
             contentDescription = "Splash Screen",
             modifier = Modifier.fillMaxSize(),
             contentScale = ContentScale.FillWidth,

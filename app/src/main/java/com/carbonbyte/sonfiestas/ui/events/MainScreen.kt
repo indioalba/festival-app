@@ -51,10 +51,12 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import coil.compose.AsyncImage
 import coil.request.ImageRequest
 import com.carbonbyte.sonfiestas.R
@@ -99,16 +101,16 @@ fun MainScreen(uiState: EventsUiState, onIntent: (EventsIntent) -> Unit) {
                 }
                 Box(modifier = Modifier.background(Color.White)) {
                     Image(
-                        painter = painterResource(id = R.drawable.splash_fiestas_agosto2026),
+                        painter = painterResource(id = R.drawable.splash_fiestas_alba_de_tormes_10),
                         contentDescription = null,
                         modifier = Modifier
                             .matchParentSize()
-                            .alpha(0.3f),
+                            .alpha(0.2f),
                         contentScale = ContentScale.FillWidth,
                         alignment = Alignment.BottomCenter,
                     )
                     CenterAlignedTopAppBar(
-                        title = { Text("Fiestas Agosto '26", fontWeight = FontWeight.Bold) },
+                        title = { Text(text = stringResource(id = R.string.app_name), fontSize = 24.sp, fontWeight = FontWeight.Bold) },
                         actions = {
                             IconButton(onClick = { onIntent(EventsIntent.ToggleFavoritesFilter) }) {
                                 Icon(
