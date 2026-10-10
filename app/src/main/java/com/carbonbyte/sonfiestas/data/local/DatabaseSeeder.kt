@@ -154,7 +154,7 @@ object DatabaseSeeder {
         Event(title = "Marmaol Tributo Pop Rock", date = "2026-10-22", time = "21:45h", location = "Plaza Mayor", category = EventCategory.MUSIC.name),
         Event(title = "Toro de fuego con buscapiés", date = "2026-10-22", time = "23:30h", location = "Plaza Mayor", category = EventCategory.BULLS.name),
         Event(title = "Quema de la capilla", date = "2026-10-22", time = "23:45h", location = "Plaza Mayor", category = EventCategory.OTHER.name),
-        Event(title = "Bomba final", date = "2026-10-22", time = "00:00h", location = "Plaza Mayor", category = EventCategory.OTHER.name)
+        Event(title = "Bomba final", date = "2026-10-22", time = "00:00h", location = "Plaza Mayor", category = EventCategory.OTHER.name),
     )
     /*val initialEvents = listOf(
         // Viernes 21/08/2026
