@@ -28,7 +28,7 @@ import com.carbonbyte.sonfiestas.ui.theme.FestivalTheme
 fun FestivalPoster(modifier: Modifier = Modifier) {
     Box(modifier = modifier.fillMaxSize()) {
         Image(
-            painter = painterResource(id = R.drawable.splash_fiestas_agosto2026),
+            painter = painterResource(id = R.drawable.splash_fiestas_alba_de_tormes_10),
             contentDescription = null,
             modifier = Modifier.fillMaxSize(),
             contentScale = ContentScale.Crop,
